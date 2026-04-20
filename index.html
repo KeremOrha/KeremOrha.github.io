@@ -56,7 +56,7 @@
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 7");
+				console.log("All sounds ready! + 8");
 			});
 		
 		
@@ -254,24 +254,24 @@
 								character.image.src = "./assets/character/characterWalk3.png";walk++;
 								break;
 							case 4:
-								character.image.src = "./assets/character/characterWalk4.png";walk++;
+								character.image.src = "./assets/character/characterWalk4.png";walk++;walkSound  = true;
 								break;
 							case 5:
-								character.image.src = "./assets/character/characterWalk5.png";walk++;
+								character.image.src = "./assets/character/characterWalk5.png";walk++;walkSound = false;
 								break;
 							case 6:
-								character.image.src = "./assets/character/characterWalk6.png";walk++;walkSound  = true;
+								character.image.src = "./assets/character/characterWalk6.png";walk++;
 								break;
 							case 7:
-								character.image.src = "./assets/character/characterWalk7.png";walk++;walkSound = false;
+								character.image.src = "./assets/character/characterWalk7.png";walk++;
 								break;
 							case 8:
 								character.image.src = "./assets/character/characterWalk8.png";walk++;
 								break;
 							case 9:
-								character.image.src = "./assets/character/characterWalk9.png";walk++;
+								character.image.src = "./assets/character/characterWalk9.png";walk++;walkSound  = true;
 								break;
-							case 10:	character.image.src = "./assets/character/characterWalk10.png";walk = 1;
+							case 10:	character.image.src = "./assets/character/characterWalk10.png";walk = 1;walkSound = false;
 								break;
 							default:
 								break;
