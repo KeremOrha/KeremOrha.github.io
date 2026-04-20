@@ -30,7 +30,7 @@
 				},
 
 				// Play by name
-				play(name, volume = 1) {
+				function play(name, volume = 1) {
 					const buffer = this.cache[name];
 					if (!buffer) return;
 
