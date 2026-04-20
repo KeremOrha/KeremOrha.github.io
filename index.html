@@ -80,7 +80,7 @@
 				background = new component(414,412,0,0,"./assets/roomBackground.png");
 				startScreen = new component(414,412,0,0,"./assets/gameStart.png");
 				character = new component (65,122,500,500,"./assets/character/characterStand.png");
-				rEScreen = new component (414,412,0,0,"./assets/placeHolder/wanted.png");
+				rEScreen = new component (414,412,0,0,"./assets/placeHolder/tayibim.png");
 				inventoryScreen = new component (414,412,0,0,"./assets/inventory.png");
 				walls = [
 					new component(414,20,0,-4,"./assets/placeHolder/chn.png"),
@@ -220,9 +220,9 @@
 			
 			var walk = 1;
 			var timer = 5;
-			
-			
 			var temp = 1;
+
+			var walkSound = true;
 			
 			function cWalk(){
 				character.xSpeed = 0;
@@ -239,13 +239,16 @@
 							gamePaused = true;
 							rE = true;
 						}
-						if(timer>10)SoundManager.play('walk');
+
+						if(walkSound)SoundManager.play('walk');
+							
+					
 						switch(walk){
 							case 1:
-								character.image.src = "./assets/character/characterWalk1.png";walk++;
+								character.image.src = "./assets/character/characterWalk1.png";walk++;walkSound  = true;
 								break;
 							case 2:
-								character.image.src = "./assets/character/characterWalk2.png";walk++;
+								character.image.src = "./assets/character/characterWalk2.png";walk++;walkSound = false;
 								break;
 							case 3:
 								character.image.src = "./assets/character/characterWalk3.png";walk++;
@@ -257,10 +260,10 @@
 								character.image.src = "./assets/character/characterWalk5.png";walk++;
 								break;
 							case 6:
-								character.image.src = "./assets/character/characterWalk6.png";walk++;
+								character.image.src = "./assets/character/characterWalk6.png";walk++;walkSound  = true;
 								break;
 							case 7:
-								character.image.src = "./assets/character/characterWalk7.png";walk++;
+								character.image.src = "./assets/character/characterWalk7.png";walk++;walkSound = false;
 								break;
 							case 8:
 								character.image.src = "./assets/character/characterWalk8.png";walk++;
