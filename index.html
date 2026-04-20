@@ -343,7 +343,7 @@
 					if (character.crashWith(doors[i])&&gameArea.key && gameArea.key == 32 && roomTimer>20) {
 						changeRoom(i);
 						roomTimer = 0; 
-						play(door);
+						SoundManager.play(door);
 					}
 				}
 				if (character.crashWith(lockedDoors[0])&&gameArea.key && gameArea.key == 32 && roomTimer>20 && sunKey) {
