@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<style>
+			canvas{
+				border:1px solid #d3d3d3;
+				background-color: #000000;
+			}
+		</style>
+	
+
+	</head>
+	<body onload = "startGame()" style="background-color:black;">
+			
+		<script>
+				const SoundManager = {
+				context: new (window.AudioContext || window.webkitAudioContext)(),
+				cache: {},
+
+				// Load multiple sounds at once
+				async load(soundList) {
+					const promises = Object.keys(soundList).map(async (name) => {
+						const response = await fetch(soundList[name]);
+						const arrayBuffer = await response.arrayBuffer();
+						const audioBuffer = await this.context.decodeAudioData(arrayBuffer);
+						this.cache[name] = audioBuffer;
+					});
+					return Promise.all(promises);
+				},
+
+				// Play by name
+				play(name, volume = 1) {
+					const buffer = this.cache[name];
+					if (!buffer) return;
+
+					const source = this.context.createBufferSource();
+					const gainNode = this.context.createGain(); // For volume control
+
+					source.buffer = buffer;
+					gainNode.gain.value = volume;
+
+					source.connect(gainNode);
+					gainNode.connect(this.context.destination);
+					
+					source.start(0);
+				}
+			};
+
+			// --- Usage ---
+
+			const manifest = {
+				door: './sounds/doorOpen.mp3'
+				
+			};
+
+			SoundManager.load(manifest).then(() => {
+				console.log("All sounds ready!");
+			});
+		
+		
+		
+		
+		
+			var	startScreen;
+			var background;
+			var character;
+			var walls = [];//walls için collision şeysi yapay zeka bakımlı
+			var furn = [];
+			var doors = [];
+			var lockedDoors = [];
+			var rEScreen;
+			var inventoryScreen;
+			
+			
+			
+			
+			function startGame(){
+				background = new component(414,412,0,0,"./assets/roomBackground.png");
+				startScreen = new component(414,412,0,0,"./assets/gameStart.png");
+				character = new component (65,122,500,500,"./assets/character/characterStand.png");
+				rEScreen = new component (414,412,0,0,"./assets/placeHolder/cihan.png");
+				inventoryScreen = new component (414,412,0,0,"./assets/inventory.png");
+				walls = [
+					new component(414,20,0,-4,"./assets/placeHolder/chn.png"),
+					new component(414,20,0,394,"./assets/placeHolder/chn2.png"),
+					new component(20,412,-4,0,"./assets/placeHolder/chn3.png"),
+					new component(20,412,400,0,"./assets/placeHolder/chn4.png")
+				];
+				/*
+					furn listesi
+						
+					0:  bush
+					1:  bush
+					2:  bush
+					3:  bush
+					4:  bed
+					5:  verticalChair
+					6:  horizontalChair
+					7:  horizontalDesk
+					8:  verticalDesk
+					9:  horizontalSofa
+					10: horizontalSofa
+					11: verticalSofa
+					12: verticalSofa
+					13: sit
+					14: sit
+					15: stand
+					16: stand
+					17: bigTV
+				
+				
+				
+				*/
+				var scale = 1.4;
+				furn = [
+					new component(100,96,500,500,""),//bush
+					new component(100,96,500,500,""),//bush
+					new component(100,96,500,500,""),//bush
+					new component(100,96,500,500,""),//bush
+					new component(208,74,500,500,""),//bed
+					new component(58,60,500,500,""),//verticalChair
+					new component(60,58,500,500,""),//horizontalChair
+					new component(120*scale,61*scale,500,500,""),//horizontalDesk
+					new component(61*scale,120*scale,500,500,""),//verticalDesk
+					new component(120*scale,56*scale,500,500,""),//horizontalSofa
+					new component(120*scale,56*scale,500,500,""),//horizontalSofa
+					new component(56*scale,120*scale,500,500,""),//verticalSofa
+					new component(56*scale,120*scale,500,500,""),//verticalSofa
+					new component(50*scale,56*scale,500,500,""),//sit
+					new component(50*scale,56*scale,500,500,""),//sit
+					new component(73*scale,61*scale,500,500,""),//stand
+					new component(73*scale,61*scale,500,500,""),//stand
+					new component(145,370,500,500,"")//bigTv
+				];
+				
+				doors = [
+					new component(58,58,500,500,"./assets/vDoor.png"),
+					new component(58,58,500,500,"./assets/vDoor.png"),
+					new component(58,58,500,500,"./assets/hDoor.png"),
+					new component(58,58,500,500,"./assets/hDoor.png")
+				];
+				lockedDoors = [
+					new component(58,58,500,500,"./assets/vLockedDoor.png"),
+					new component(58,58,500,500,"./assets/hLockedDoor.png")
+				];
+				
+				
+				gameArea.start();
+			}
+			
+			var gameArea = {
+			canvas : document.createElement("canvas"),
+			start : function(){
+				this.canvas.width = 414;
+				this.canvas.height = 412;
+				this.context = this.canvas.getContext("2d");
+				document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+				this.frameNo = 0;
+					this.interval = setInterval(updateGameArea, 20);
+					 window.addEventListener('keydown', function (e) {
+					  gameArea.key = e.keyCode;
+					})
+					window.addEventListener('keyup', function (e) {
+					  gameArea.key = false;
+					})
+					gameArea.canvas.style.position = "absolute";
+					gameArea.canvas.style.left = "50%";
+					gameArea.canvas.style.top = "50%";
+					gameArea.canvas.style.transform = "translate(-50%, -50%)";
+					},
+				clear : function() {
+					this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+				},
+				stop : function() {
+					clearInterval(this.interval);
+				}
+			}
+			function component(width , height , x , y , image){
+				this.image = new Image();
+				this.image.src = image;
+				this.width = width;
+				this.height = height;
+				this.xSpeed = 0;
+				this.ySpeed = 0;
+				this.x = x;
+				this.y = y;
+		
+				this.update = function(){
+					ctx = gameArea.context;
+					ctx.drawImage(this.image,this.x,this.y,this.width,this.height);
+				}
+				this.newPos = function(){
+					this.x += this.xSpeed;
+					this.y += this.ySpeed;
+				}
+				this.crashWith = function(otherobj){
+					var myleft = this.x;
+					var myright = this.x + this.width;
+					var mytop = this.y;
+					var mybottom = this.y + this.height;
+
+					var otherleft = otherobj.x;
+					var otherright = otherobj.x + otherobj.width;
+					var othertop = otherobj.y;
+					var otherbottom = otherobj.y + otherobj.height;
+					
+					
+					
+					return !(
+						mybottom < othertop ||
+						mytop > otherbottom ||
+						myright < otherleft ||
+						myleft > otherright
+					);
+				}
+			}
+			
+			
+			var walk = 1;
+			var timer = 5;
+			
+			
+			var temp = 3;
+			
+			function cWalk(){
+				character.xSpeed = 0;
+				character.ySpeed = 0;
+				if (gameArea.key && gameArea.key == 65) {character.xSpeed = -3*temp; }
+				if (gameArea.key && gameArea.key == 68) {character.xSpeed = 3*temp; }
+				if (gameArea.key && gameArea.key == 87) {character.ySpeed = -3*temp; }
+				if (gameArea.key && gameArea.key == 83) {character.ySpeed = 3*temp; }
+				if (gameArea.key&& gameArea.key == 87||gameArea.key == 83||gameArea.key == 65||gameArea.key == 68){
+					if(timer > 10){
+						
+						var randomEncounter = Math.floor((Math.random() * 1000) + 1);
+						if(randomEncounter > 998){
+							gamePaused = true;
+							rE = true;
+						}
+						
+						switch(walk){
+							case 1:
+								character.image.src = "./assets/character/characterWalk1.png";walk++;
+								break;
+							case 2:
+								character.image.src = "./assets/character/characterWalk2.png";walk++;
+								break;
+							case 3:
+								character.image.src = "./assets/character/characterWalk3.png";walk++;
+								break;
+							case 4:
+								character.image.src = "./assets/character/characterWalk4.png";walk++;
+								break;
+							case 5:
+								character.image.src = "./assets/character/characterWalk5.png";walk++;
+								break;
+							case 6:
+								character.image.src = "./assets/character/characterWalk6.png";walk++;
+								break;
+							case 7:
+								character.image.src = "./assets/character/characterWalk7.png";walk++;
+								break;
+							case 8:
+								character.image.src = "./assets/character/characterWalk8.png";walk++;
+								break;
+							case 9:
+								character.image.src = "./assets/character/characterWalk9.png";walk++;
+								break;
+							case 10:	character.image.src = "./assets/character/characterWalk10.png";walk = 1;
+								break;
+							default:
+								break;
+						}	
+						timer = 0;
+						}
+						timer++;
+				}
+				else{
+					walk = 1;
+					character.image.src = "./assets/character/characterStand.png";
+				}
+			}
+			
+			
+			var roomX;
+			var roomY ;
+			/*
+			if(character.xSpeed > 0){
+							character.x = walls[i].x - character.width-4;
+						}
+						else if(character.xSpeed < 0){
+							character.x = walls[i].x + walls[i].width+4;
+						}
+			
+			*/
+			
+			
+			
+			var lastKeyPressed;
+			var roomTimer = 0;
+			function collision(){
+			
+				
+				if (gameArea.key && gameArea.key == 65) {lastKeyPressed = 'a'}
+				else if (gameArea.key && gameArea.key == 68) {lastKeyPressed = 'd'}
+				else if (gameArea.key && gameArea.key == 87) {lastKeyPressed = 'w' }
+				else if (gameArea.key && gameArea.key == 83) {lastKeyPressed = 's'}
+				else lastKeyPressed=lastKeyPressed;
+				
+				
+				 
+				for(let i=0;i<walls.length;i++){
+					if(character.crashWith(walls[i])){
+						character.x -= character.xSpeed;
+						character.y -= character.ySpeed;
+						if(character.xSpeed == 0 && (lastKeyPressed == 'd' || lastKeyPressed == 'a')){
+						character.x += 8*(200-walls[i].x) / Math.abs(200-walls[i].x);
+						}
+						if(character.ySpeed == 0 && (lastKeyPressed == 'w' || lastKeyPressed == 's')){
+						character.y += 8*(200-walls[i].y) / Math.abs(200-walls[i].y);
+						}
+					}
+						
+				}
+				for(let i=0;i<furn.length;i++){
+					if(character.crashWith(furn[i])){
+						character.x -= character.xSpeed;
+						character.y -= character.ySpeed;
+						if(character.xSpeed == 0 && (lastKeyPressed == 'd' || lastKeyPressed == 'a')){
+						character.x += 8*(200-furn[i].x) / Math.abs(200-furn[i].x);
+						}
+						if(character.ySpeed == 0 && (lastKeyPressed == 'w' || lastKeyPressed == 's')){
+						character.y += 8*(200-furn[i].y) / Math.abs(200-furn[i].y);
+						}
+					}
+						
+				}
+			
+				
+				
+				for (let i = 0; i < doors.length; i++) {
+					if (character.crashWith(doors[i])&&gameArea.key && gameArea.key == 32 && roomTimer>20) {
+						changeRoom(i);
+						roomTimer = 0; 
+						play(door);
+					}
+				}
+				if (character.crashWith(lockedDoors[0])&&gameArea.key && gameArea.key == 32 && roomTimer>20 && sunKey) {
+					moonDoorLocked = false;
+					changeRoom(-1);
+				}
+				if (character.crashWith(lockedDoors[1])&&gameArea.key && gameArea.key == 32 && roomTimer>20 && moonKey) {
+					sunDoorLocked = false;
+					changeRoom(-1);
+				}
+				
+			}
+			
+		/*
+					furn listesi
+						
+					0:  bush
+					1:  bush
+					2:  bush
+					3:  bush
+					4:  bed
+					5:  verticalChair
+					6:  horizontalChair
+					7:  horizontalDesk
+					8:  verticalDesk
+					9:  horizontalSofa
+					10: horizontalSofa
+					11: verticalSofa
+					12: verticalSofa
+					13: sit
+					14: sit
+					15: stand
+					16: stand
+					17: bigTV
+				
+				
+				
+				*/
+			/*
+				default positions:
+			
+				character.x = 180; character.y = 140;
+				
+				doors[0].x = -24;doors[0].y = 174;
+				doors[1].x = 381;doors[1].y = 174;
+				doors[2].x = 184;doors[2].y = -24;
+				doors[3].x = 184;doors[3].y = 375;
+				
+				
+		
+			
+			*/
+			var inv = false;
+			var rE = false;
+			var gameStarted = false;
+			var gamePaused = false;
+			function enterGame(){
+				roomY = 5;
+				roomX = 2;
+				
+				gameStarted = true;
+				changeRoom(-1);
+				character.x = 180; character.y = 260;
+			}	
+			
+			
+			
+			var sunDoorLocked = true;
+			var moonDoorLocked = true;
+			function changeRoom(doorNum){
+				this.doorNum = doorNum;
+				
+					switch(this.doorNum){
+						case 0:
+							roomX--;
+							character.x = 325; character.y = 140;
+							break;
+						case 1:
+							roomX++;
+							character.x = 20; character.y = 140;
+							break;
+						case 2:
+							roomY--;
+							character.x = 180; character.y = 260;
+							break;
+						case 3:
+							roomY++;
+							character.x = 180; character.y = 30;
+							break;
+						default:
+							break;
+					
+					
+					}
+					
+					console.log("" + roomY +","+roomX+"");
+					
+				
+				
+				
+				
+					
+					
+				switch(roomY){
+				case 0:
+					switch(roomX){//3,3-3,4 arasındaki kapı ve 1,2-0,2 arasındaki kapı kilitli yapılacak!!!!!!!!!!!!!!!!!!!!!!!!!!
+						case 0:
+							
+							doors[0].x = 500;doors[0].y = 500;
+							doors[1].x = 381;doors[1].y = 174;
+							doors[2].x = 500;doors[2].y = 500;
+							doors[3].x = 184;doors[3].y = 375;
+							furn[0].x = 300; furn[0].y=300; furn[0].image.src="./assets/bush/bush2.png";
+							furn[5].x = 80; furn[5].y=20; furn[5].image.src="./assets/chair/blackChairDown.png";
+							furn[7].x = 25; furn[7].y=85; furn[7].image.src="./assets/desk/normalDeskhorizontal.png";
+							
+							
+							break;
+						case 1:
+							
+							doors[0].x = -24;doors[0].y = 174;
+							doors[1].x = 500;doors[1].y = 500;
+							doors[2].x = 500;doors[2].y = 500;
+							doors[3].x = 500;doors[3].y = 500;
+							
+							
+							furn[0].x = 500; furn[0].y=500;
+							furn[5].x = 500; furn[5].y=500;
+							furn[7].x = 500; furn[7].y=500;
+							
+							
+							break;
+						case 2:
+							
+							doors[0].x = 500;doors[0].y = 500;
+							doors[1].x = 500;doors[1].y = 500;
+							doors[2].x = 500;doors[2].y = 500;
+							doors[3].x = 184;doors[3].y = 375;
+							lockedDoors[1].x = 500; lockedDoors[1].y = 500;
+							furn[15].x = 500; furn[15].y=500;
+							
+							
+							
+							break;
+						case 3:
+							
+							doors[0].x = 500;doors[0].y = 500;
+							doors[1].x = 381;doors[1].y = 174;
+							doors[2].x = 500;doors[2].y = 500;
+							doors[3].x = 184;doors[3].y = 375;
+							
+							furn[9].x = 500; furn[9].y=500;
+							furn[17].x = 500; furn[17].y=500;
+							
+							
+							
+							
+							break;
+						case 4:
+							
+							doors[0].x = -24;doors[0].y = 174;
+							doors[1].x = 500;doors[1].y = 500;
+							doors[2].x = 500;doors[2].y = 500;
+							doors[3].x = 500;doors[3].y = 500;
+							furn[17].x = 250; furn[17].y=20; furn[17].image.src="./assets/tvBig.png";
+							
+							
+							
+							
+							break;
+						default:
+							break;
+					}
+					break;
+				case 1:
+					switch(roomX){
+						case 0:
+							
+							doors[0].x = 500;doors[0].y = 500;
+							doors[1].x = 381;doors[1].y = 174;
+							doors[2].x = 184;doors[2].y = -24;
+							doors[3].x = 500;doors[3].y = 500;
+							
+							furn[0].x = 500; furn[0].y=500;
+							furn[1].x = 500; furn[1].y=500;
+							furn[2].x = 500; furn[2].y=500;
+							furn[5].x = 500; furn[5].y=500;
+							furn[7].x = 130; furn[7].y=300; furn[7].image.src="./assets/desk/darkDeskHorizontal.png";
+							
+							
+							break;
+						case 1:
+							
+							doors[0].x = -24;doors[0].y = 174;
+							doors[1].x = 381;doors[1].y = 174;
+							doors[2].x = 500;doors[2].y = 500;
+							doors[3].x = 184;doors[3].y = 375;
+							lockedDoors[1].x = 500; lockedDoors[1].y = 500;
+							furn[0].x = 160; furn[0].y=20; furn[0].image.src="./assets/bush/bush1.png";
+							furn[1].x = 300; furn[1].y=300; furn[1].image.src="./assets/bush/bush1.png";
+							furn[2].x = 20; furn[2].y=300; furn[2].image.src="./assets/bush/bush1.png";
+							furn[7].x = 500; furn[7].y=500;
+							furn[13].x = 500; furn[13].y=500;
+							furn[14].x = 500; furn[14].y=500;
+							furn[15].x = 500; furn[15].y=500;
+							
+							
+							break;
+						case 2:
+							
+							doors[0].x = -24;doors[0].y = 174;
+							doors[1].x = 381;doors[1].y = 174;
+							if(sunDoorLocked){
+								lockedDoors[1].x = 184; lockedDoors[1].y = -24;
+								doors[2].x = 500;doors[2].y = 500;
+							}
+							else{
+								doors[2].x = 184;doors[2].y = -24;
+								lockedDoors[1].x = 500; lockedDoors[1].y = 500;
+							}
+							
+							
+							doors[3].x = 500;doors[3].y = 500;
+							furn[0].x = 500; furn[0].y=500;
+							furn[1].x = 500; furn[1].y=500;
+							furn[2].x = 500; furn[2].y=500;
+							furn[9].x = 500; furn[9].y=500;
+							furn[15].x = 150; furn[15].y=300; furn[15].image.src="./assets/stand/normalStandTv.png";
+							
+							
+							
+							break;
+						case 3:
+							
+							doors[0].x = -24;doors[0].y = 174;
+							doors[1].x = 381;doors[1].y = 174;
+							doors[2].x = 184;doors[2].y = -24;
+							doors[3].x = 500;doors[3].y = 500;
+							lockedDoors[1].x = 500; lockedDoors[1].y = 500;
+							furn[3].x = 500; furn[3].y=500;
+							furn[5].x = 500; furn[5].y=500;	
+							furn[6].x = 500; furn[6].y=500;
+							furn[9].x = 140; furn[9].y=300; furn[9].image.src="./assets/sofa/blueSofaUp.png";
+							furn[15].x = 500; furn[15].y=500;
+							
+							
+							
+							break;
+						case 4:
+							
+							doors[0].x = -24;doors[0].y = 174;
+							doors[1].x = 500;doors[1].y = 500;
+							doors[2].x = 500;doors[2].y = 500;
+							doors[3].x = 184;doors[3].y = 375;
+							
+							furn[3].x = 300; furn[3].y=20; furn[3].image.src="./assets/bush/bush2.png";
+							furn[5].x = 325; furn[5].y=120; furn[5].image.src="./assets/chair/redChairUp.png";	
+							furn[6].x = 235; furn[6].y=35; furn[6].image.src="./assets/chair/redChairRight.png";
+							furn[9].x = 500; furn[9].y=500;
+							
+							
+							
+							
+							break;
+						default:
+							break;
+					}
+					break;
+				case 2:
+					switch(roomX){
+						case 0:
+							
+							doors[0].x = 500;doors[0].y = 500;
+							doors[1].x = 500;doors[1].y = 500;
+							doors[2].x = 500;doors[2].y = 500;
+							doors[3].x = 184;doors[3].y = 375;
+							
+							furn[7].x = 130; furn[7].y=20; furn[7].image.src="./assets/desk/lightDeskHorizontal.png";
+							furn[16].x = 500; furn[16].y=500;
+							
+							
+							
+							break;
+						case 1:
+							
+							doors[0].x = 500;doors[0].y = 500;
+							doors[1].x = 500;doors[1].y = 500;
+							doors[2].x = 184;doors[2].y = -24;
+							doors[3].x = 184;doors[3].y = 375;
+							furn[0].x = 500; furn[0].y=500;
+							furn[1].x = 500; furn[1].y=500;
+							furn[2].x = 500; furn[2].y=500;
+							furn[4].x = 500; furn[4].y=500;
+							furn[13].x = 325; furn[13].y=170; furn[13].image.src="./assets/sit/whiteSitLeft.png";
+							furn[14].x = 20; furn[14].y=170; furn[14].image.src="./assets/sit/whiteSitRight.png";
+							
+							
+							
+							break;
+						case 3:
+							
+							doors[0].x = 500;doors[0].y = 500;
+							doors[1].x = 381;doors[1].y = 174;
+							doors[2].x = 500;doors[2].y = 500;
+							doors[3].x = 500;doors[3].y = 500;
+							
+							
+							furn[3].x = 500; furn[3].y=500;
+							furn[5].x = 500; furn[5].y=500;	
+							furn[6].x = 500; furn[6].y=500;
+							
+							
+							break;
+						case 4:
+							
+							doors[0].x = -24;doors[0].y = 174;
+							doors[1].x = 500;doors[1].y = 500;
+							doors[2].x = 184;doors[2].y = -24;
+							doors[3].x = 500;doors[3].y = 500;
+							
+							furn[3].x = 300; furn[3].y=300; furn[3].image.src="./assets/bush/bush2.png";
+							furn[5].x = 325; furn[5].y=240; furn[5].image.src="./assets/chair/greenChairDown.png";	
+							furn[6].x = 240; furn[6].y=330; furn[6].image.src="./assets/chair/greenChairRight.png";
+							
+							
+							break;
+						default:
+							break;
+					}
+					break;
+				case 3:
+					switch(roomX){
+						case 0:
+							
+							doors[0].x = 500;doors[0].y = 500;
+							doors[1].x = 381;doors[1].y = 174;
+							doors[2].x = 184;doors[2].y = -24;
+							doors[3].x = 500;doors[3].y = 500;
+							
+							furn[4].x = 500; furn[4].y=500;
+							furn[7].x = 500; furn[7].y=500;
+							furn[16].x = 158; furn[16].y=305; furn[16].image.src="./assets/stand/darkStandUp.png";
+							
+							
+							break;
+						case 1:
+							
+							doors[0].x = -24;doors[0].y = 174;
+							doors[1].x = 381;doors[1].y = 174;
+							doors[2].x = 184;doors[2].y = -24;
+							doors[3].x = 500;doors[3].y = 500;
+							furn[4].x = 110; furn[4].y=320; furn[4].image.src="./assets/bed/blueBed.png";
+							furn[13].x = 500; furn[13].y = 500;
+							furn[14].x = 500; furn[14].y = 500;
+							furn[16].x = 500; furn[16].y=500;
+							
+							
+							
+							break;
+						case 2:
+							lockedDoors[0].x = 500; lockedDoors[0].y = 500;
+							doors[0].x = -24;doors[0].y = 174;
+							doors[1].x = 381;doors[1].y = 174;
+							doors[2].x = 500;doors[2].y = 500;
+							doors[3].x = 184;doors[3].y = 375;
+							furn[4].x = 500; furn[4].y=500;
+							furn[13].x = 325; furn[13].y=310; furn[13].image.src="./assets/sit/blueSitLeft.png";
+							furn[14].x = 20; furn[14].y=20; furn[14].image.src="./assets/sit/blueSitRight.png";
+							furn[15].x = 500; furn[15].y=500;
+							furn[16].x = 500; furn[16].y=500;
+							
+							
+							
+							break;
+						case 3:
+							
+							doors[0].x = -24;doors[0].y = 174;
+							
+							if(moonDoorLocked){
+								lockedDoors[0].x = 381; lockedDoors[0].y = 174;
+								doors[1].x = 500;doors[1].y = 500;
+							}
+							else{
+								doors[1].x = 381;doors[1].y = 174;
+								lockedDoors[0].x = 500; lockedDoors[0].y = 500;
+							}
+							
+							
+							doors[2].x = 500;doors[2].y = 500;
+							doors[3].x = 184;doors[3].y = 375;
+							furn[0].x = 500; furn[0].y=500;
+							furn[1].x = 500; furn[1].y=500;
+							furn[2].x = 500; furn[2].y=500;
+							furn[3].x = 500; furn[3].y=500;	
+							furn[13].x = 500; furn[13].y = 500;
+							furn[14].x = 500; furn[14].y = 500;
+							furn[15].x = 20; furn[15].y=20; furn[15].image.src="./assets/stand/lightStandDown.png";
+							furn[16].x = 295; furn[16].y=305; furn[16].image.src="./assets/stand/normalStandUp.png";
+							
+							
+							
+							break;
+						case 4:
+							
+							doors[0].x = -24;doors[0].y = 174;
+							doors[1].x = 500;doors[1].y = 500;
+							doors[2].x = 500;doors[2].y = 500;
+							doors[3].x = 500;doors[3].y = 500;
+							
+							furn[15].x = 500; furn[15].y=500;
+							furn[16].x = 500; furn[16].y=500;
+							
+							
+							
+							break;
+						default:
+							break;
+					}
+					break;
+				case 4:
+					switch(roomX){
+						case 0:
+							
+							doors[0].x = 500;doors[0].y = 500;
+							doors[1].x = 381;doors[1].y = 174;
+							doors[2].x = 500;doors[2].y = 500;
+							doors[3].x = 500;doors[3].y = 500;
+							
+							furn[9].x = 500; furn[9].y=500;
+							furn[10].x = 500; furn[10].y=500;
+							furn[15].x = 500; furn[15].y=500;
+							furn[16].x = 500; furn[16].y=500;
+							
+							
+							break;
+						case 1:
+							
+							doors[0].x = -24;doors[0].y = 174;
+							doors[1].x = 381;doors[1].y = 174;
+							doors[2].x = 500;doors[2].y = 500;
+							doors[3].x = 184;doors[3].y = 375;
+							furn[0].x = 500; furn[0].y=500;
+							furn[1].x = 500; furn[1].y=500; 
+							furn[13].x = 500; furn[13].y = 500;
+							furn[14].x = 500; furn[14].y = 500;
+							furn[9].x = 230; furn[9].y=20; furn[9].image.src="./assets/sofa/greenSofaDown.png";
+							furn[10].x = 20; furn[10].y=20; furn[10].image.src="./assets/sofa/greenSofaDown.png";
+							furn[15].x = 295; furn[15].y=310; furn[15].image.src="./assets/stand/normalStandTv.png";
+							furn[16].x = 20; furn[16].y=310; furn[16].image.src="./assets/stand/normalStandTv.png";
+							
+							
+							break;
+						case 2:
+							
+							doors[0].x = -24;doors[0].y = 174;
+							doors[1].x = 381;doors[1].y = 174;
+							doors[2].x = 184;doors[2].y = -24;
+							doors[3].x = 184;doors[3].y = 375;
+							furn[0].x = 500; furn[0].y=500;
+							furn[1].x = 500; furn[1].y=500;
+							furn[2].x = 500; furn[2].y=500;
+							furn[3].x = 500; furn[3].y=500;	
+							furn[9].x = 500; furn[9].y=500;
+							furn[10].x = 500; furn[10].y=500;							
+							furn[13].x = 325; furn[13].y=20; furn[13].image.src="./assets/sit/blueSitLeft.png";
+							furn[14].x = 20; furn[14].y=310; furn[14].image.src="./assets/sit/blueSitRight.png";
+							furn[15].x = 500; furn[15].y=500;
+							furn[16].x = 500; furn[16].y=500;
+							
+							
+							break;
+						case 3:
+						
+							lockedDoors[0].x = 500; lockedDoors[0].y = 500;
+							doors[0].x = -24;doors[0].y = 174;
+							doors[1].x = 381;doors[1].y = 174;
+							doors[2].x = 184;doors[2].y = -24;
+							doors[3].x = 500;doors[3].y = 500;
+							furn[0].x = 20; furn[0].y=20; furn[0].image.src="./assets/bush/bush1.png";
+							furn[1].x = 300; furn[1].y=300; furn[1].image.src="./assets/bush/bush1.png";
+							furn[2].x = 20; furn[2].y=300; furn[2].image.src="./assets/bush/bush2.png";
+							furn[3].x = 300; furn[3].y=20; furn[3].image.src="./assets/bush/bush2.png";
+							furn[5].x = 500; furn[5].y=500;	
+							furn[6].x = 500; furn[6].y=500;	
+							furn[7].x = 500; furn[7].y=500;	
+							furn[8].x = 500; furn[8].y=500;
+							furn[13].x = 500; furn[13].y = 500;
+							furn[14].x = 500; furn[14].y = 500;
+							furn[15].x = 500; furn[15].y=500;
+							furn[16].x = 500; furn[16].y=500;
+							
+							
+							
+							break;
+						case 4:
+							
+							doors[0].x = -24;doors[0].y = 174;
+							doors[1].x = 500;doors[1].y = 500;
+							doors[2].x = 500;doors[2].y = 500;
+							doors[3].x = 184;doors[3].y = 375;
+							furn[0].x = 500; furn[0].y=500;
+							furn[1].x = 500; furn[1].y=500;
+							furn[2].x = 500; furn[2].y=500;
+							furn[3].x = 300; furn[3].y=20; furn[3].image.src="./assets/bush/bush2.png";
+							furn[5].x = 320; furn[5].y=130; furn[5].image.src="./assets/chair/blueChairDown.png";	
+							furn[6].x = 230; furn[6].y=30; furn[6].image.src="./assets/chair/blueChairLeft.png";	
+							furn[7].x = 50; furn[7].y=20; furn[7].image.src="./assets/desk/darkDeskHorizontal.png";	
+							furn[8].x = 310; furn[8].y=200; furn[8].image.src="./assets/desk/lightDeskVertical.png";	
+							furn[11].x = 500; furn[11].y=500;	
+							furn[12].x = 500; furn[12].y=500;
+							
+							
+							break;
+						default:
+							break;
+					}
+					break;
+				case 5:
+					switch(roomX){
+						case 0:
+							
+							doors[0].x = 500;doors[0].y = 500;
+							doors[1].x = 381;doors[1].y = 174;
+							doors[2].x = 500;doors[2].y = 500;
+							doors[3].x = 500;doors[3].y = 500;
+							furn[0].x = 500; furn[0].y=500;
+							furn[1].x = 500; furn[1].y=500; 
+							furn[4].x = 190; furn[4].y=20; furn[4].image.src="./assets/bed/blackBed.png";
+							furn[5].x = 80; furn[5].y=235; furn[5].image.src="./assets/chair/blackChairDown.png";
+							furn[7].x = 25; furn[7].y=300; furn[7].image.src="./assets/desk/normalDeskhorizontal.png";
+						
+							break;
+						case 1:
+							
+							doors[0].x = -24;doors[0].y = 174;
+							doors[1].x = 381;doors[1].y = 174;
+							doors[2].x = 184;doors[2].y = -24;
+							doors[3].x = 500;doors[3].y = 500;
+							furn[0].x = 50; furn[0].y=300; furn[0].image.src="./assets/bush/bush2.png";
+							furn[1].x = 300; furn[1].y=30; furn[1].image.src="./assets/bush/bush2.png";
+							furn[4].x = 500; furn[4].y=500;
+							furn[5].x = 500; furn[5].y=500;
+							furn[7].x = 500; furn[7].y=500;
+							
+							
+							break;
+						case 2:
+							
+							doors[0].x = -24;doors[0].y = 174;
+							doors[1].x = 381;doors[1].y = 174;
+							doors[2].x = 184;doors[2].y = -24;
+							doors[3].x = 500;doors[3].y = 500;
+							furn[0].x = 20; furn[0].y= 300; furn[0].image.src="./assets/bush/bush1.png";
+							furn[1].x = 300; furn[1].y= 300; furn[1].image.src="./assets/bush/bush1.png";
+							furn[11].x = 500, furn[11].y = 500;
+							furn[13].x = 500; furn[13].y = 500;
+							furn[14].x = 500; furn[14].y = 500;
+							break;
+						case 3:
+							
+							doors[0].x = -24;doors[0].y = 174;
+							doors[1].x = 500;doors[1].y = 500;
+							doors[2].x = 500;doors[2].y = 500;
+							doors[3].x = 500;doors[3].y = 500;
+							furn[0].x = 500; furn[0].y=500;
+							furn[1].x = 500; furn[1].y=500; 
+							furn[11].x = 320; furn[11].y=130; furn[11].image.src="./assets/sofa/whitesofaLeft.png";
+							
+							
+							
+							break;
+						case 4:
+							
+							doors[0].x = 500;doors[0].y = 500;
+							doors[1].x = 500;doors[1].y = 500;
+							doors[2].x = 184;doors[2].y = -24;
+							doors[3].x = 500;doors[3].y = 500;
+							furn[3].x = 170; furn[3].y=250; furn[3].image.src="./assets/bush/bush1.png";
+							furn[5].x = 500; furn[5].y=500;	
+							furn[6].x = 500; furn[6].y=500;	
+							furn[7].x = 500; furn[7].y=500;	
+							furn[8].x = 500; furn[8].y=500;
+							furn[11].x = 320; furn[11].y=220; furn[11].image.src="./assets/sofa/whiteSofaLeft.png";
+							furn[12].x = 20; furn[12].y=220; furn[12].image.src="./assets/sofa/WhiteSofaRight.png";
+							
+							
+							break;
+						default:
+							break;
+					}
+					break;
+				default:
+					break;
+				}
+			
+			}
+			var marble1 = false;
+			var marble2 = false;
+			var marble3 = false;
+			var sunKey = false;
+			var moonKey = false;
+			var flashlight = false;
+			function inventory(){
+			
+			
+			
+			
+			}
+			
+			function updateGameArea(){
+				roomTimer ++;
+				if(gameStarted && !gamePaused){
+					gameArea.clear();
+					background.update();
+					cWalk();
+						
+					collision();
+						
+					character.newPos();
+					character.update();
+						
+					for(let i = 0; i <furn.length; i++){
+						furn[i].update();
+					}
+					for(let i = 0; i <lockedDoors.length; i++){
+						lockedDoors[i].update();
+					}
+						/*for (let i = 0; i < walls.length; i++) {
+							walls[i].update();
+						}*/
+					for (let i = 0; i < doors.length; i++) {
+						doors[i].update();
+							
+							
+					}
+						/*if(gameArea.key && gameArea.key == 85){
+							character.x = 180; character.y = 140;
+							}
+							//unstuck
+							*/
+							
+							
+					if(gameArea.key && gameArea.key == 69 && roomTimer >10){
+						roomTimer = 0;
+						gamePaused = true;
+						inv = true;
+						inventory();
+							}
+						
+					}
+					else if(rE){
+						rEScreen.update();
+						if(gameArea.key && gameArea.key == 13){
+							gamePaused = false;
+							rE = false;
+							}
+					}
+					else if(inv){
+						inventoryScreen.update();
+						if(gameArea.key && gameArea.key == 69 && roomTimer >10){
+							roomTimer = 0;
+							gamePaused = false;
+							inv = false
+							
+							}
+					}
+					else{
+						startScreen.update();
+						if(gameArea.key && gameArea.key == 13){
+							enterGame();
+							startScreen.image.src="";
+						}
+					}
+			}
+
+		</script>
+			
+
+	</body>
+
+
+</html>
