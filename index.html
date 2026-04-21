@@ -61,7 +61,7 @@
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 60");
+				console.log("All sounds ready! + 61");
 			});
 		
 		
@@ -1215,6 +1215,9 @@
 					}
 					for(let i = 0; i <lockedDoors.length; i++){
 						lockedDoors[i].update();
+					}
+					for(let i = 0; i <marble.length; i++){
+						marble[i].update();
 					}
 						/*for (let i = 0; i < walls.length; i++) {
 							walls[i].update();
