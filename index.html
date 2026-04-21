@@ -56,11 +56,12 @@
 				doorUnlock: './sounds/doorUnlock.mp3',
 				RE: './sounds/randomEncounter.mp3',
 				fail: './sounds/fail.mp3',
-				success: './sounds/success.mp3'
+				success: './sounds/success.mp3',
+				pop: './sounds/pop.mp3'
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 59");
+				console.log("All sounds ready! + 60");
 			});
 		
 		
@@ -84,6 +85,7 @@
 			var keyMoon;
 			var flashlight;
 			var darkRoom;
+			var marble = [];
 			
 			function startGame(){
 				background = new component(414,412,0,0,"./assets/roomBackground.png");
@@ -97,6 +99,15 @@
 				keyMoon = new component (51,102,500,500,"./assets/moonKey.png");
 				flashlight = new component (40,40,500,500,"./assets/flashlight.png");
 				darkRoom = new component (414,412,500,500,"./assets/darkRoom.png");
+
+				marble = [
+
+					new component (51,80,500,500,"./assets/darkRoom.png"),
+					new component (51,80,500,500,"./assets/darkRoom.png"),
+					new component (51,80,500,500,"./assets/darkRoom.png")
+
+					
+				];
 
 				
 				walls = [
@@ -369,6 +380,28 @@
 					}
 				}
 
+
+				for (let i = 0; i < marble.length; i++) {
+					if (character.crashWith(marble[i])) {
+						
+						switch(i){
+							case 0:
+								marble0Have = true;
+								break;
+							case 1:
+								marble1Have = true;
+								break;
+							case 2:
+								marble2Have = true;
+								break;
+							default:
+								break;
+						}
+						marble[i].x = 500; marble[i].y = 500;
+						SoundManager.play('pop');
+					}
+				}
+				
 				
 				if (character.crashWith(puzzle1)) {
 
@@ -410,6 +443,7 @@
 					flashlight.x = 500; flashlight.y = 500;
 					flashlightHave = true;
 					flashlight.width = 60;flashlight.height = 60;
+					SoundManager.play('pop');
 					}
 				
 			}
@@ -805,9 +839,12 @@
 								lockedDoors[0].x = 500; lockedDoors[0].y = 500;
 							}
 							
-							
+							marble[0].x = 500; marble[0].y = 500;
 							doors[2].x = 500;doors[2].y = 500;
 							doors[3].x = 184;doors[3].y = 375;
+							marble
+
+							
 							furn[0].x = 500; furn[0].y=500;
 							furn[1].x = 500; furn[1].y=500;
 							furn[2].x = 500; furn[2].y=500;
@@ -821,6 +858,14 @@
 							
 							break;
 						case 4:
+
+
+							if(!marble0Have){
+								marble[0].x = 350; marble[0].y = 200;
+							}
+							else{
+								marble[0].x = 500; marble[0].y = 500;
+							}
 							
 							doors[0].x = -24;doors[0].y = 174;
 							doors[1].x = 500;doors[1].y = 500;
@@ -1023,9 +1068,9 @@
 				}
 			
 			}
-			var marble1 = false;
-			var marble2 = false;
-			var marble3 = false;
+			var marble0Have = false;
+			var marble1Have = false;
+			var marble2Have = false;
 			var sunKey = false;
 			var moonKey = false;
 			var flashlight = false;
