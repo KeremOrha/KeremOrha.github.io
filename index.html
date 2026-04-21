@@ -60,7 +60,7 @@
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 42");
+				console.log("All sounds ready! + 43");
 			});
 		
 		
@@ -82,6 +82,7 @@
 			var puzzle3;
 			var keySun;
 			var keyMoon;
+			var flashlight;
 			
 			function startGame(){
 				background = new component(414,412,0,0,"./assets/roomBackground.png");
@@ -93,7 +94,7 @@
 				puzzle1 = new component (100,100,500,500,"./assets/puzzle/puzzle1.png");
 				keySun = new component (102,204,500,500,"./assets/sunKey.png");
 				keyMoon = new component (68,136,500,500,"./assets/moonKey.png");
-				
+				flashlight = new component (40,40,500,500,"./assets/flashlight.png");
 				walls = [
 					new component(414,20,0,-4,"./assets/placeHolder/chn.png"),
 					new component(414,20,0,394,"./assets/placeHolder/chn2.png"),
@@ -398,6 +399,14 @@
 						SoundManager.play('doorLocked');
 					}
 				}
+
+				
+				if (character.crashWith(flashlight)) {
+
+					flashlight.x = 500; flashlight.y = 500;
+					flashlightHave = true;
+					flashlight.width = 60;flashlight.height = 60;
+					}
 				
 			}
 			
@@ -454,7 +463,7 @@
 			}	
 			
 			
-			
+			var flashlightHave = false;
 			var sunDoorLocked = true;
 			var moonDoorLocked = true;
 			function changeRoom(doorNum){
@@ -659,6 +668,13 @@
 				case 2:
 					switch(roomX){
 						case 0:
+
+							if(!flashlightHave){
+								flashlight.x = 100;flashlight.y = 50;
+							}
+							else{
+								flashlight.x = 500;flashlight.y = 500;
+							}
 							
 							doors[0].x = 500;doors[0].y = 500;
 							doors[1].x = 500;doors[1].y = 500;
@@ -721,6 +737,8 @@
 				case 3:
 					switch(roomX){
 						case 0:
+
+							flashlight.x = 500;flashlight.y = 500;
 							
 							doors[0].x = 500;doors[0].y = 500;
 							doors[1].x = 381;doors[1].y = 174;
@@ -1161,6 +1179,7 @@
 						gamePaused = true;
 						inv = true;
 						if(moonKey){keyMoon.x = 40; keyMoon.y = 250;}
+						if(flashlightHave){flashlight.x = 300; flashlight.y = 250;}
 							}
 						
 					}
@@ -1179,6 +1198,7 @@
 							gamePaused = false;
 							inv = false
 							keyMoon.x = 500; keyMoon.y = 500;
+							flashlight.x = 500; flashlight.y = 500;
 							}
 					}
 
