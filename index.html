@@ -58,7 +58,7 @@
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 18");
+				console.log("All sounds ready! + 19");
 			});
 		
 		
@@ -237,7 +237,7 @@
 					if(timer > 10){
 						
 						var randomEncounter = Math.floor((Math.random() * 1000) + 1);
-						if(randomEncounter > 998){
+						if(randomEncounter > 99){
 							gamePaused = true;
 							rE = true;
 							SoundManager.play('RE');
@@ -251,25 +251,25 @@
 								character.image.src = "./assets/character/characterWalk1.png";walk++;
 								break;
 							case 2:
-								character.image.src = "./assets/character/characterWalk2.png";walk++;if(walkSound)SoundManager.play('walk');
+								character.image.src = "./assets/character/characterWalk2.png";walk++;
 								break;
 							case 3:
-								character.image.src = "./assets/character/characterWalk3.png";walk++;
+								character.image.src = "./assets/character/characterWalk3.png";walk++;if(walkSound)SoundManager.play('walk');
 								break;
 							case 4:
 								character.image.src = "./assets/character/characterWalk4.png";walk++;
 								break;
 							case 5:
-								character.image.src = "./assets/character/characterWalk5.png";walk++;if(walkSound)SoundManager.play('walk');
+								character.image.src = "./assets/character/characterWalk5.png";walk++;
 								break;
 							case 6:
 								character.image.src = "./assets/character/characterWalk6.png";walk++;
 								break;
 							case 7:
-								character.image.src = "./assets/character/characterWalk7.png";walk++;
+								character.image.src = "./assets/character/characterWalk7.png";walk++;if(walkSound)SoundManager.play('walk');
 								break;
 							case 8:
-								character.image.src = "./assets/character/characterWalk8.png";walk++;if(walkSound)SoundManager.play('walk');
+								character.image.src = "./assets/character/characterWalk8.png";walk++;
 								break;
 							case 9:
 								character.image.src = "./assets/character/characterWalk9.png";walk++;
