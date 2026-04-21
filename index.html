@@ -61,7 +61,7 @@
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 64");
+				console.log("All sounds ready! + 65");
 			});
 		
 		
@@ -1216,9 +1216,7 @@
 					for(let i = 0; i <lockedDoors.length; i++){
 						lockedDoors[i].update();
 					}
-					for(let i = 0; i <marble.length; i++){
-						marble[i].update();
-					}
+					
 						/*for (let i = 0; i < walls.length; i++) {
 							walls[i].update();
 						}*/
@@ -1226,6 +1224,9 @@
 						doors[i].update();
 							
 							
+					}
+					for(let i = 0; i <marble.length; i++){
+						marble[i].update();
 					}
 					flashlight.update();
 					darkRoom.update();
@@ -1263,6 +1264,7 @@
 							inv = false
 							keyMoon.x = 500; keyMoon.y = 500;
 							flashlight.x = 500; flashlight.y = 500;
+							marble[0].x = 500; marble[0].y = 500;
 							}
 					}
 
