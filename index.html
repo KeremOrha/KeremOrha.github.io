@@ -61,7 +61,7 @@
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 65");
+				console.log("All sounds ready! + 66");
 			});
 		
 		
@@ -1258,6 +1258,7 @@
 						inventoryScreen.update();
 						if(moonKey){keyMoon.update();}
 						if(flashlightHave){flashlight.update();}
+						if(marble0Have){marble[0].update();}
 						if(gameArea.key && gameArea.key == 69 && roomTimer >10){
 							roomTimer = 0;
 							gamePaused = false;
