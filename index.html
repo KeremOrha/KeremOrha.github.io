@@ -54,11 +54,13 @@
 				walk: './sounds/walk.mp3',
 				doorLocked: './sounds/doorLocked.mp3',
 				doorUnlock: './sounds/doorUnlock.mp3',
-				RE : './sounds/randomEncounter.mp3'
+				RE: './sounds/randomEncounter.mp3',
+				fail: './sounds/fail.mp3',
+				success: './sounds/success.mp3'
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 21");
+				console.log("All sounds ready! + 22");
 			});
 		
 		
@@ -1078,7 +1080,7 @@
 						switch(mathQuestionNum){
 							case 1:
 								if(gameArea.key && gameArea.key == 66 && roomTimer >10){
-									//success sesi oynat
+									SoundManager.play('success');
 									puzzle1Complete = true;
 									moonKey = true;
 									roomTimer = 0;
@@ -1086,7 +1088,7 @@
 									puzzle1 = false;
 								}
 								else{
-									//failed sesi oynat
+									SoundManager.play('fail');
 									roomTimer = 0;
 									gamePaused = false;
 									puzzle1 = false;
