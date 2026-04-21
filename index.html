@@ -58,7 +58,7 @@
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 17");
+				console.log("All sounds ready! + 18");
 			});
 		
 		
@@ -82,7 +82,7 @@
 				background = new component(414,412,0,0,"./assets/roomBackground.png");
 				startScreen = new component(414,412,0,0,"./assets/gameStart.png");
 				character = new component (65,122,500,500,"./assets/character/characterStand.png");
-				rEScreen = new component (414,412,0,0,"./assets/placeHolder/RE.png");
+				rEScreen = new component (414,412,0,0,"./assets/placeHolder/randomEncounter.png");
 				inventoryScreen = new component (414,412,0,0,"./assets/inventory.png");
 				walls = [
 					new component(414,20,0,-4,"./assets/placeHolder/chn.png"),
@@ -236,7 +236,7 @@
 				if (gameArea.key&& gameArea.key == 87||gameArea.key == 83||gameArea.key == 65||gameArea.key == 68){
 					if(timer > 10){
 						
-						var randomEncounter = Math.floor((Math.random() * 1000) + 1);
+						var Encounter = Math.floor((Math.random() * 1000) + 1);
 						if(randomEncounter > 998){
 							gamePaused = true;
 							rE = true;
