@@ -61,7 +61,7 @@
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 62");
+				console.log("All sounds ready! + 63");
 			});
 		
 		
@@ -383,7 +383,7 @@
 
 				for (let i = 0; i < marble.length; i++) {
 					if (character.crashWith(marble[i])) {
-						
+						SoundManager.play('pop');
 						switch(i){
 							case 0:
 								marble0Have = true;
@@ -398,7 +398,7 @@
 								break;
 						}
 						marble[i].x = 500; marble[i].y = 500;
-						SoundManager.play('pop');
+						
 					}
 				}
 				
@@ -439,11 +439,11 @@
 
 				
 				if (character.crashWith(flashlight)) {
-
+					SoundManager.play('pop');
 					flashlight.x = 500; flashlight.y = 500;
 					flashlightHave = true;
 					flashlight.width = 60;flashlight.height = 60;
-					SoundManager.play('pop');
+					
 					}
 				
 			}
@@ -831,7 +831,7 @@
 							doors[0].x = -24;doors[0].y = 174;
 							
 							if(moonDoorLocked){
-								lockedDoors[0].x = 375; lockedDoors[0].y = 174;
+								lockedDoors[0].x = 360; lockedDoors[0].y = 150;
 								doors[1].x = 500;doors[1].y = 500;
 							}
 							else{
