@@ -60,7 +60,7 @@
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 51");
+				console.log("All sounds ready! + 52");
 			});
 		
 		
@@ -83,6 +83,7 @@
 			var keySun;
 			var keyMoon;
 			var flashlight;
+			var darkRoom;
 			
 			function startGame(){
 				background = new component(414,412,0,0,"./assets/roomBackground.png");
@@ -95,6 +96,9 @@
 				keySun = new component (51,102,500,500,"./assets/sunKey.png");
 				keyMoon = new component (51,102,500,500,"./assets/moonKey.png");
 				flashlight = new component (40,40,500,500,"./assets/flashlight.png");
+				darkRoom = new component (414,412,500,500,"./assets/darkRoom.png");
+
+				
 				walls = [
 					new component(414,20,0,-4,"./assets/placeHolder/chn.png"),
 					new component(414,20,0,394,"./assets/placeHolder/chn2.png"),
@@ -556,6 +560,14 @@
 							
 							break;
 						case 4:
+
+
+							if(flashlightHave){
+								darkRoom.x = 0 darkRoom.y = 0;
+							}
+							else{
+								darkRoom.x = 500 darkRoom.y = 500;
+							}
 							
 							doors[0].x = -24;doors[0].y = 174;
 							doors[1].x = 500;doors[1].y = 500;
@@ -1168,6 +1180,7 @@
 							
 					}
 					flashlight.update();
+					darkRoom.update();
 						/*if(gameArea.key && gameArea.key == 85){
 							character.x = 180; character.y = 140;
 							}
