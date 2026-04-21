@@ -60,7 +60,7 @@
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 34");
+				console.log("All sounds ready! + 35");
 			});
 		
 		
@@ -1109,11 +1109,12 @@
 										gamePaused = false;
 										puzzle1Open = false;
 									}
-									else{
+									else if(gameArea.key == 65 || gameArea.key == 67 || gameArea.key == 68 || gameArea.key == 69 ){
 										SoundManager.play('fail');
 										roomTimer = 0;
 										gamePaused = false;
 										puzzle1Open = false;
+										character.x = 325; character.y = 140;
 									}
 									break;
 								case 2:
@@ -1125,11 +1126,12 @@
 										gamePaused = false;
 										puzzle1Open = false;
 									}
-									else{
+									else if(gameArea.key == 65 || gameArea.key == 67 || gameArea.key == 66 || gameArea.key == 69 ){
 										SoundManager.play('fail');
 										roomTimer = 0;
 										gamePaused = false;
 										puzzle1Open = false;
+										character.x = 325; character.y = 140;
 									}
 									break;
 								case 3:
@@ -1141,11 +1143,12 @@
 										gamePaused = false;
 										puzzle1Open = false;
 									}
-									else{
+									else if(gameArea.key == 66 || gameArea.key == 67 || gameArea.key == 68 || gameArea.key == 69 ){ 
 										SoundManager.play('fail');
 										roomTimer = 0;
 										gamePaused = false;
 										puzzle1Open = false;
+										character.x = 325; character.y = 140;
 									}
 									break;
 								case 4:
@@ -1157,11 +1160,12 @@
 										gamePaused = false;
 										puzzle1Open = false;
 									}
-									else{
+									else if(gameArea.key == 65 || gameArea.key == 67 || gameArea.key == 68 || gameArea.key == 66 ){
 										SoundManager.play('fail');
 										roomTimer = 0;
 										gamePaused = false;
 										puzzle1Open = false;
+										character.x = 325; character.y = 140;
 									}
 									break;
 								default:
