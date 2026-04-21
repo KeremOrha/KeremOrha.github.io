@@ -58,7 +58,7 @@
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 19");
+				console.log("All sounds ready! + 20");
 			});
 		
 		
@@ -237,7 +237,7 @@
 					if(timer > 10){
 						
 						var randomEncounter = Math.floor((Math.random() * 1000) + 1);
-						if(randomEncounter > 99){
+						if(randomEncounter > 998){
 							gamePaused = true;
 							rE = true;
 							SoundManager.play('RE');
