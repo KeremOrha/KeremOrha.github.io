@@ -60,7 +60,7 @@
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 36");
+				console.log("All sounds ready! + 37");
 			});
 		
 		
@@ -78,7 +78,10 @@
 			var inventoryScreen;
 			var mathPuzzle;
 			var puzzle1;
-			
+			var puzzle2;
+			var puzzle3;
+			var keySun;
+			var keyMoon;
 			
 			function startGame(){
 				background = new component(414,412,0,0,"./assets/roomBackground.png");
@@ -88,6 +91,9 @@
 				inventoryScreen = new component (414,412,0,0,"./assets/inventory.png");
 				mathPuzzle = new component (414,412,0,0,"./assets/mathQuestion/mathQ1.png");
 				puzzle1 = new component (100,100,500,500,"./assets/puzzle/puzzle1.png");
+				keySun = new component (102,204,500,500,"./assets/sunKey.png");
+				keyMoon = new component (102,204,500,500,"./assets/moonKey.png");
+				
 				walls = [
 					new component(414,20,0,-4,"./assets/placeHolder/chn.png"),
 					new component(414,20,0,394,"./assets/placeHolder/chn2.png"),
