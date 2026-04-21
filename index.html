@@ -58,7 +58,7 @@
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 20");
+				console.log("All sounds ready! + 21");
 			});
 		
 		
@@ -74,8 +74,8 @@
 			var lockedDoors = [];
 			var rEScreen;
 			var inventoryScreen;
-			
-			
+			var mathPuzzle;
+			var puzzle1;
 			
 			
 			function startGame(){
@@ -84,6 +84,8 @@
 				character = new component (65,122,500,500,"./assets/character/characterStand.png");
 				rEScreen = new component (414,412,0,0,"./assets/placeHolder/randomEncounter.png");
 				inventoryScreen = new component (414,412,0,0,"./assets/inventory.png");
+				mathPuzzle = new component (414,412,0,0,"./assets/mathquestion/mathQ1.png");
+				mathPuzzle = new component (75,75,20,140,"./assets/puzzle/puzzle1.png");
 				walls = [
 					new component(414,20,0,-4,"./assets/placeHolder/chn.png"),
 					new component(414,20,0,394,"./assets/placeHolder/chn2.png"),
@@ -356,7 +358,7 @@
 				if (character.crashWith(lockedDoors[0])&&gameArea.key && gameArea.key == 32 && roomTimer>20) {
 					
 					roomTimer = 0; 
-					if(sunKey){
+					if(moonKey){
 						SoundManager.play('doorUnlock');
 						moonDoorLocked = false;
 						changeRoom(-1);
@@ -369,7 +371,7 @@
 				if (character.crashWith(lockedDoors[1])&&gameArea.key && gameArea.key == 32 && roomTimer>20 && moonKey) {
 					
 					roomTimer = 0; 
-					if(moonKey){
+					if(sunKey){
 						SoundManager.play('doorUnlock');
 						sunDoorLocked = false;
 						changeRoom(-1);
@@ -795,6 +797,8 @@
 							doors[1].x = 381;doors[1].y = 174;
 							doors[2].x = 500;doors[2].y = 500;
 							doors[3].x = 500;doors[3].y = 500;
+
+							
 							
 							furn[9].x = 500; furn[9].y=500;
 							furn[10].x = 500; furn[10].y=500;
@@ -979,6 +983,38 @@
 			
 			
 			}
+			var mathQuestionNum = 1;
+			var puzzle1 = false;
+			var puzzle2 = false;
+			var puzzle3 = false;
+			var puzzle1Complete = false;
+			var puzzle2Complete = false;
+			var puzzle3Complete = false;
+			function puzzle(puzzleNum){
+				gamePaused = true;
+				switch(puzzleNum){
+					case 1:
+						mathQuestionNum = Math.floor((Math.random() * 4) + 1);
+						mathPuzzle.image.src = "./assets/mathquestion/mathQ" + mathQuestionNum + ".png";
+						puzzle1 = true;
+						break;
+					case 2:
+
+
+							
+						break;
+					case 3:
+
+
+							
+						break;
+							
+					default:
+						break;
+				}
+			}
+
+			
 			
 			function updateGameArea(){
 				roomTimer ++;
@@ -1011,7 +1047,7 @@
 							}
 							//unstuck
 							*/
-							
+					if(!puzzle1Complete)puzzle1.update();		
 							
 					if(gameArea.key && gameArea.key == 69 && roomTimer >10){
 						roomTimer = 0;
@@ -1036,6 +1072,37 @@
 							inv = false
 							
 							}
+					}
+					else if(puzzle1){
+						mathPuzzle.update();
+						switch(mathQuestionNum){
+							case 1:
+								if(gameArea.key && gameArea.key == 66 && roomTimer >10){
+									//success sesi oynat
+									puzzle1Complete = true;
+									moonKey = true;
+									roomTimer = 0;
+									gamePaused = false;
+									puzzle1 = false;
+								}
+								else{
+									//failed sesi oynat
+									roomTimer = 0;
+									gamePaused = false;
+									puzzle1 = false;
+								}
+								break;
+							case 2:
+								break;
+							case 3:
+								break;
+							case 4:
+								break;
+							default:
+								break;		
+						}
+
+							
 					}
 					else{
 						startScreen.update();
