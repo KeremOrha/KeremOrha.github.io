@@ -60,7 +60,7 @@
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 35");
+				console.log("All sounds ready! + 36");
 			});
 		
 		
@@ -1030,7 +1030,86 @@
 				}
 			}
 
-			
+
+			function p1Func(){
+				mathPuzzle.update();
+					if(roomTimer >20)
+						switch(mathQuestionNum){
+							case 1:
+								if(gameArea.key == 66){
+									SoundManager.play('success');
+									puzzle1Complete = true;
+									moonKey = true;
+									roomTimer = 0;
+									gamePaused = false;
+									puzzle1Open = false;
+								}
+								else if(gameArea.key == 65 || gameArea.key == 67 || gameArea.key == 68 || gameArea.key == 69 ){
+									SoundManager.play('fail');
+									roomTimer = 0;
+									gamePaused = false;
+									puzzle1Open = false;
+								
+								}
+								break;
+							case 2:
+								if(gameArea.key == 68){
+									SoundManager.play('success');
+									puzzle1Complete = true;
+									moonKey = true;
+									roomTimer = 0;
+									gamePaused = false;
+									puzzle1Open = false;
+								}
+								else if(gameArea.key == 65 || gameArea.key == 67 || gameArea.key == 66 || gameArea.key == 69 ){
+									SoundManager.play('fail');
+									roomTimer = 0;
+									gamePaused = false;
+									puzzle1Open = false;
+										
+								}
+								break;
+							case 3:
+								if(gameArea.key == 65){
+									SoundManager.play('success');
+									puzzle1Complete = true;
+									moonKey = true;
+									roomTimer = 0;
+									gamePaused = false;
+									puzzle1Open = false;
+								}
+								else if(gameArea.key == 66 || gameArea.key == 67 || gameArea.key == 68 || gameArea.key == 69 ){ 
+									SoundManager.play('fail');
+									roomTimer = 0;
+									gamePaused = false;
+									puzzle1Open = false;
+										
+								}
+								break;
+							case 4:
+								if(gameArea.key == 69){
+									SoundManager.play('success');
+									puzzle1Complete = true;
+									moonKey = true;
+									roomTimer = 0;
+									gamePaused = false;
+									puzzle1Open = false;
+								}
+								else if(gameArea.key == 65 || gameArea.key == 67 || gameArea.key == 68 || gameArea.key == 66 ){
+									SoundManager.play('fail');
+									roomTimer = 0;
+									gamePaused = false;
+									puzzle1Open = false;
+										
+								}
+								break;
+							default:
+								break;		
+						}
+						character.x = 325; character.y = 140;
+						puzzle1.x = 500; puzzle1.y = 500;
+				
+			}
 			
 			function updateGameArea(){
 				roomTimer ++;
@@ -1097,82 +1176,7 @@
 
 						
 					else if(puzzle1Open){
-						mathPuzzle.update();
-						if(roomTimer >20)
-							switch(mathQuestionNum){
-								case 1:
-									if(gameArea.key == 66){
-										SoundManager.play('success');
-										puzzle1Complete = true;
-										moonKey = true;
-										roomTimer = 0;
-										gamePaused = false;
-										puzzle1Open = false;
-									}
-									else if(gameArea.key == 65 || gameArea.key == 67 || gameArea.key == 68 || gameArea.key == 69 ){
-										SoundManager.play('fail');
-										roomTimer = 0;
-										gamePaused = false;
-										puzzle1Open = false;
-										character.x = 325; character.y = 140;
-									}
-									break;
-								case 2:
-									if(gameArea.key == 68){
-										SoundManager.play('success');
-										puzzle1Complete = true;
-										moonKey = true;
-										roomTimer = 0;
-										gamePaused = false;
-										puzzle1Open = false;
-									}
-									else if(gameArea.key == 65 || gameArea.key == 67 || gameArea.key == 66 || gameArea.key == 69 ){
-										SoundManager.play('fail');
-										roomTimer = 0;
-										gamePaused = false;
-										puzzle1Open = false;
-										character.x = 325; character.y = 140;
-									}
-									break;
-								case 3:
-									if(gameArea.key == 65){
-										SoundManager.play('success');
-										puzzle1Complete = true;
-										moonKey = true;
-										roomTimer = 0;
-										gamePaused = false;
-										puzzle1Open = false;
-									}
-									else if(gameArea.key == 66 || gameArea.key == 67 || gameArea.key == 68 || gameArea.key == 69 ){ 
-										SoundManager.play('fail');
-										roomTimer = 0;
-										gamePaused = false;
-										puzzle1Open = false;
-										character.x = 325; character.y = 140;
-									}
-									break;
-								case 4:
-									if(gameArea.key == 69){
-										SoundManager.play('success');
-										puzzle1Complete = true;
-										moonKey = true;
-										roomTimer = 0;
-										gamePaused = false;
-										puzzle1Open = false;
-									}
-									else if(gameArea.key == 65 || gameArea.key == 67 || gameArea.key == 68 || gameArea.key == 66 ){
-										SoundManager.play('fail');
-										roomTimer = 0;
-										gamePaused = false;
-										puzzle1Open = false;
-										character.x = 325; character.y = 140;
-									}
-									break;
-								default:
-									break;		
-							}
-
-							
+						p1Func();	
 					}
 
 
