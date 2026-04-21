@@ -60,7 +60,7 @@
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 24");
+				console.log("All sounds ready! + 25");
 			});
 		
 		
@@ -986,9 +986,9 @@
 			
 			}
 			var mathQuestionNum = 1;
-			var puzzle1 = false;
-			var puzzle2 = false;
-			var puzzle3 = false;
+			var puzzle1Open = false;
+			var puzzle2Open = false;
+			var puzzle3Open = false;
 			var puzzle1Complete = false;
 			var puzzle2Complete = false;
 			var puzzle3Complete = false;
@@ -998,7 +998,7 @@
 					case 1:
 						mathQuestionNum = Math.floor((Math.random() * 4) + 1);
 						mathPuzzle.image.src = "./assets/mathquestion/mathQ" + mathQuestionNum + ".png";
-						puzzle1 = true;
+						puzzle1Open = true;
 						break;
 					case 2:
 
@@ -1075,7 +1075,7 @@
 							
 							}
 					}
-					else if(puzzle1){
+					else if(puzzle1Open){
 						mathPuzzle.update();
 						switch(mathQuestionNum){
 							case 1:
@@ -1085,13 +1085,13 @@
 									moonKey = true;
 									roomTimer = 0;
 									gamePaused = false;
-									puzzle1 = false;
+									puzzle1Open = false;
 								}
 								else{
 									SoundManager.play('fail');
 									roomTimer = 0;
 									gamePaused = false;
-									puzzle1 = false;
+									puzzle1Open = false;
 								}
 								break;
 							case 2:
