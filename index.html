@@ -53,11 +53,12 @@
 				door: './sounds/doorOpen.mp3',
 				walk: './sounds/walk.mp3',
 				doorLocked: './sounds/doorLocked.mp3',
-				doorUnlock: './sounds/doorUnlock.mp3'
+				doorUnlock: './sounds/doorUnlock.mp3',
+				RE : './sounds/randomEncounter.mp3'
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 13");
+				console.log("All sounds ready! + 14");
 			});
 		
 		
@@ -239,6 +240,7 @@
 						if(randomEncounter > 998){
 							gamePaused = true;
 							rE = true;
+							SoundManager.play('RE');
 						}
 
 						
