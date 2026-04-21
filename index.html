@@ -60,7 +60,7 @@
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 39");
+				console.log("All sounds ready! + 40");
 			});
 		
 		
@@ -92,7 +92,7 @@
 				mathPuzzle = new component (414,412,0,0,"./assets/mathQuestion/mathQ1.png");
 				puzzle1 = new component (100,100,500,500,"./assets/puzzle/puzzle1.png");
 				keySun = new component (102,204,500,500,"./assets/sunKey.png");
-				keyMoon = new component (102,204,500,500,"./assets/moonKey.png");
+				keyMoon = new component (68,136,500,500,"./assets/moonKey.png");
 				
 				walls = [
 					new component(414,20,0,-4,"./assets/placeHolder/chn.png"),
@@ -1160,7 +1160,7 @@
 						roomTimer = 0;
 						gamePaused = true;
 						inv = true;
-						if(moonKey){keyMoon.x = 50; keyMoon.y = 300;}
+						if(moonKey){keyMoon.x = 50; keyMoon.y = 250;}
 							}
 						
 					}
