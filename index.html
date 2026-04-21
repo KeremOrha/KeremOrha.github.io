@@ -60,7 +60,7 @@
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 37");
+				console.log("All sounds ready! + 38");
 			});
 		
 		
@@ -767,7 +767,7 @@
 							doors[0].x = -24;doors[0].y = 174;
 							
 							if(moonDoorLocked){
-								lockedDoors[0].x = 381; lockedDoors[0].y = 174;
+								lockedDoors[0].x = 361; lockedDoors[0].y = 174;
 								doors[1].x = 500;doors[1].y = 500;
 							}
 							else{
@@ -999,12 +999,10 @@
 			var sunKey = false;
 			var moonKey = false;
 			var flashlight = false;
-			function inventory(){
+
+
+
 			
-			
-			
-			
-			}
 			var mathQuestionNum = 1;
 			var puzzle1Open = false;
 			var puzzle2Open = false;
@@ -1158,7 +1156,7 @@
 						roomTimer = 0;
 						gamePaused = true;
 						inv = true;
-						inventory();
+						if(moonKey){keyMoon.x = 50; keyMoon.y = 300;}
 							}
 						
 					}
@@ -1175,7 +1173,7 @@
 							roomTimer = 0;
 							gamePaused = false;
 							inv = false
-							
+							keyMoon.x = 500; keyMoon.y = 500;
 							}
 					}
 
