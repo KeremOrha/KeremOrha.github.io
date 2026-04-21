@@ -60,7 +60,7 @@
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 38");
+				console.log("All sounds ready! + 39");
 			});
 		
 		
@@ -1047,6 +1047,7 @@
 									roomTimer = 0;
 									gamePaused = false;
 									puzzle1Open = false;
+									puzzle1.x = 500; puzzle1.y = 500;
 								}
 								else if(gameArea.key == 65 || gameArea.key == 67 || gameArea.key == 68 || gameArea.key == 69 ){
 									SoundManager.play('fail');
@@ -1064,6 +1065,7 @@
 									roomTimer = 0;
 									gamePaused = false;
 									puzzle1Open = false;
+									puzzle1.x = 500; puzzle1.y = 500;
 								}
 								else if(gameArea.key == 65 || gameArea.key == 67 || gameArea.key == 66 || gameArea.key == 69 ){
 									SoundManager.play('fail');
@@ -1081,6 +1083,7 @@
 									roomTimer = 0;
 									gamePaused = false;
 									puzzle1Open = false;
+									puzzle1.x = 500; puzzle1.y = 500;
 								}
 								else if(gameArea.key == 66 || gameArea.key == 67 || gameArea.key == 68 || gameArea.key == 69 ){ 
 									SoundManager.play('fail');
@@ -1098,6 +1101,7 @@
 									roomTimer = 0;
 									gamePaused = false;
 									puzzle1Open = false;
+									puzzle1.x = 500; puzzle1.y = 500;
 								}
 								else if(gameArea.key == 65 || gameArea.key == 67 || gameArea.key == 68 || gameArea.key == 66 ){
 									SoundManager.play('fail');
@@ -1111,7 +1115,7 @@
 								break;		
 						}
 						character.x = 325; character.y = 140;
-						puzzle1.x = 500; puzzle1.y = 500;
+						
 				
 			}
 			
@@ -1169,6 +1173,7 @@
 					}
 					else if(inv){
 						inventoryScreen.update();
+						if(moonKey){keyMoon.update();}
 						if(gameArea.key && gameArea.key == 69 && roomTimer >10){
 							roomTimer = 0;
 							gamePaused = false;
