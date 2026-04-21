@@ -60,7 +60,7 @@
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 30");
+				console.log("All sounds ready! + 31");
 			});
 		
 		
@@ -87,7 +87,7 @@
 				rEScreen = new component (414,412,0,0,"./assets/placeHolder/randomEncounter.png");
 				inventoryScreen = new component (414,412,0,0,"./assets/inventory.png");
 				mathPuzzle = new component (414,412,0,0,"./assets/mathQuestion/mathQ1.png");
-				puzzle1 = new component (75,75,500,500,"./assets/puzzle/puzzle1.png");
+				puzzle1 = new component (100,100,500,500,"./assets/puzzle/puzzle1.png");
 				walls = [
 					new component(414,20,0,-4,"./assets/placeHolder/chn.png"),
 					new component(414,20,0,394,"./assets/placeHolder/chn2.png"),
@@ -1091,6 +1091,9 @@
 							
 							}
 					}
+
+
+						
 					else if(puzzle1Open){
 						mathPuzzle.update();
 						switch(mathQuestionNum){
@@ -1111,10 +1114,52 @@
 								}
 								break;
 							case 2:
+								if(gameArea.key && gameArea.key == 68 && roomTimer >10){
+									SoundManager.play('success');
+									puzzle1Complete = true;
+									moonKey = true;
+									roomTimer = 0;
+									gamePaused = false;
+									puzzle1Open = false;
+								}
+								else{
+									SoundManager.play('fail');
+									roomTimer = 0;
+									gamePaused = false;
+									puzzle1Open = false;
+								}
 								break;
 							case 3:
+								if(gameArea.key && gameArea.key == 65 && roomTimer >10){
+									SoundManager.play('success');
+									puzzle1Complete = true;
+									moonKey = true;
+									roomTimer = 0;
+									gamePaused = false;
+									puzzle1Open = false;
+								}
+								else{
+									SoundManager.play('fail');
+									roomTimer = 0;
+									gamePaused = false;
+									puzzle1Open = false;
+								}
 								break;
 							case 4:
+								if(gameArea.key && gameArea.key == 69 && roomTimer >10){
+									SoundManager.play('success');
+									puzzle1Complete = true;
+									moonKey = true;
+									roomTimer = 0;
+									gamePaused = false;
+									puzzle1Open = false;
+								}
+								else{
+									SoundManager.play('fail');
+									roomTimer = 0;
+									gamePaused = false;
+									puzzle1Open = false;
+								}
 								break;
 							default:
 								break;		
@@ -1122,6 +1167,10 @@
 
 							
 					}
+
+
+
+						
 					else{
 						startScreen.update();
 						if(gameArea.key && gameArea.key == 13){
