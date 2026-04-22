@@ -56,11 +56,13 @@
 				doorUnlock: './sounds/doorUnlock.mp3',
 				fail: './sounds/fail.mp3',
 				success: './sounds/success.mp3',
-				pop: './sounds/pop.mp3'
+				pop: './sounds/pop.mp3',
+				sword: './sounds/sword.mp3',
+				heal: './sounds/heal.mp3'
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 75");
+				console.log("All sounds ready! + 76");
 			});
 		
 		
@@ -111,8 +113,8 @@
 				puzzle2 = new component (100,100,500,500,"./assets/puzzle/puzzle1.png");
 				enemy = new component (28,66,500,500,"./assets/fight/enemy.png");
 				enemydice = new component(25,25,500,500,"./assets/fight/sword1.png");
-				dice1 = new component(25,25,500,500,"./assets/fight/sword1.png");
-				dice2 = new component(25,25,500,500,"./assets/fight/sword1.png");
+				dice1 = new component(25,25,100,300,"./assets/fight/sword1.png");
+				dice2 = new component(25,25,150,300,"./assets/fight/sword1.png");
 				enemyHealth = new component (72,66,500,500,"./assets/fight/health5.png");
 				health = new component (72,66,500,500,"./assets/fight/health5.png");
 				
@@ -428,6 +430,11 @@
 
 						puzzle(2);
 						roomTimer = 0;
+					 	enemyHealthNum = 5;
+						healthNum = 5;
+						reroll = 3;
+						dice1Locked = false;
+						dice2Locked = false;
 					}
 
 
@@ -1230,19 +1237,214 @@
 			}
 
 
-
+			var dice1Locked = false;
+			var dice2Locked = false;
+			var enemyDiceNum;
+			var dice1Num;
+			var dice2Num;
+			var healthNum = 5;
+			var enemyHealthNum = 5;
+			var reroll = 3;
+			
 			function p2Func(){
-			enemy.update();
-			enemydice.update();
-			dice1.update();
-			dice2.update();
-			enemyHealth.update();
-			health.update();
-	
-
+				enemy.update();
+				enemydice.update();
+				dice1.update();
+				dice2.update();
+				enemyHealth.update();
+				health.update();
+				inventoryScreen.update();
+				enemy.x = 250; enemy.y = 30;
+				enemyHealth.x = 75; enemyHealth.y = 30;
+				health.x = 75, health.y = 350;
 				
+				enemyDice.x = 125; enemyDice.y = 30;
+				
+				
+				if(gameArea.key == 82 && roomTimer > 15){
+					enemyDiceNum = Math.floor((Math.random() * 6) + 1);
+					dice1Num = Math.floor((Math.random() * 6) + 1);
+					dice2Num = Math.floor((Math.random() * 6) + 1);
+					switch(enemyDiceNum){
+						case 1:
+						case 2:
+							health
+							enemyDice.image.src="./assets/fight/sword1";
+							break;
+						case 3:
+						case 4:
+							enemyDice.image.src="./assets/fight/health1";
+							break;
+						case 5:
+							enemyDice.image.src="./assets/fight/sword2";
+							break;
+						case 6;
+							enemyDice.image.src="./assets/fight/health2";
+							break;
+						default:
+							break;
+					}
+					switch(dice1Num){
+						case 1:
+						case 2:
+							dice1.image.src="./assets/fight/sword1";
+							break;
+						case 3:
+						case 4:
+							dice1.image.src="./assets/fight/health1";
+							break;
+						case 5:
+							dice1.image.src="./assets/fight/sword2";
+							break;
+						case 6;
+							dice1.image.src="./assets/fight/health2";
+							break;
+						default:
+							break;
+					}
+					switch(dice2Num){
+						case 1:
+						case 2:
+							dice2.image.src="./assets/fight/sword1";
+							break;
+						case 3:
+						case 4:
+							dice2.image.src="./assets/fight/health1";
+							break;
+						case 5:
+							dice2.image.src="./assets/fight/sword2";
+							break;
+						case 6;
+							dice2.image.src="./assets/fight/health2";
+							break;
+						default:
+					}
+					roomTimer = 0;
+					reroll--;
+				}
+				if(gameArea.key == 80 && roomTimer > 15){
+					switch(dice1Num){
+						case 1:
+						case 2:
+							enemyHealthNum--;
+							break;
+						case 3:
+						case 4:
+							healthNum++;
+							break;
+						case 5:
+							enemyHealthNum-=2;
+							break;
+						case 6;
+							healthNum+=;
+							break;
+						default:
+							break;
+					}
+					switch(dice2Num){
+						case 1:
+						case 2:
+							enemyHealthNum--;
+							break;
+						case 3:
+						case 4:
+							healthNum++;
+							break;
+						case 5:
+							enemyHealthNum-=2;
+							break;
+						case 6;
+							healthNum+=;
+							break;
+						default:
+							break;
+					}
+					switch(enemyDiceNum){
+						case 1:
+						case 2:
+							healthNum--;
+							break;
+						case 3:
+						case 4:
+							enemyHealthNum++;
+							break;
+						case 5:
+							healthNum-=2;
+							break;
+						case 6;
+							enemyHealthNum+=2;
+							break;
+						default:
+							break;
+					}
+					
+					if(enemyHealthNum >5)enemyHealthNum = 5;
+					if(healthNum >5)healthNum = 5;
+					switch(enemyHealthNum){
+						case 1:
+							enemyHealth.image.src="./assets/fight/health1";
+							break;
+						case 2:
+							enemyHealth.image.src="./assets/fight/health2";
+							break;
+						case 3:
+							enemyHealth.image.src="./assets/fight/health3";
+							break;
+						case 4:
+							enemyHealth.image.src="./assets/fight/health4";
+							break;
+						case 5:
+							enemyHealth.image.src="./assets/fight/health5";
+							break;
+						default:
+							SoundManager.play('success');
+							puzzle2Complete = true;
+							sunKey = true;
+							roomTimer = 0;
+							gamePaused = false;
+							puzzle2Open = false;
+							break;
+					}
+					switch(healthNum){
+						case 1:
+							health.image.src="./assets/fight/health1";
+							break;
+						case 2:
+							health.image.src="./assets/fight/health2";
+							break;
+						case 3:
+							health.image.src="./assets/fight/health3";
+							break;
+						case 4:
+							health.image.src="./assets/fight/health4";
+							break;
+						case 5:
+							health.image.src="./assets/fight/health5";
+							break;
+						default:
+							SoundManager.play('fail');
+							roomTimer = 0;
+							gamePaused = false;
+							puzzle2Open = false;
+							break;
+					}
+					dice1.x = 100; dice1.y = 300;
+					dice2.x = 150; dice2.y = 300;
+					dice1Locked = false;
+					dice2Locked = false;
+					reroll = 3;
+					roomTimer = 0
+				}
+				if(gameArea.key == 65 && !dice1Locked && roomTimer>10){
+					dice1Locked = true;
+					dice1.x = 100; dice1.y = 350;	 
+				 }
+				if(gameArea.key == 66 && !dice2Locked && roomTimer>10){
+					dice2Locked = true;		
+					dice2.x = 150; dice2.y = 350;
+						 
+				}
 			}
-
 			
 			
 			function updateGameArea(){
