@@ -62,7 +62,7 @@
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 80");
+				console.log("All sounds ready! + 81");
 			});
 		
 		
@@ -1249,13 +1249,14 @@
 
 			
 			function p2Func(){
+				puzzle2Screen.update();
 				enemy.update();
 				enemyDice.update();
 				dice1.update();
 				dice2.update();
 				enemyHealth.update();
 				health.update();
-				puzzle2Screen.update();
+				
 				enemy.x = 250; enemy.y = 30;
 				enemyHealth.x = 75; enemyHealth.y = 30;
 				health.x = 75, health.y = 350;
