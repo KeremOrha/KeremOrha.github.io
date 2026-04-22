@@ -54,14 +54,13 @@
 				walk: './sounds/walk.mp3',
 				doorLocked: './sounds/doorLocked.mp3',
 				doorUnlock: './sounds/doorUnlock.mp3',
-				RE: './sounds/randomEncounter.mp3',
 				fail: './sounds/fail.mp3',
 				success: './sounds/success.mp3',
 				pop: './sounds/pop.mp3'
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 69");
+				console.log("All sounds ready! + 70");
 			});
 		
 		
@@ -75,7 +74,7 @@
 			var furn = [];
 			var doors = [];
 			var lockedDoors = [];
-			var rEScreen;
+			
 			var inventoryScreen;
 			var mathPuzzle;
 			var puzzle1;
@@ -91,7 +90,7 @@
 				background = new component(414,412,0,0,"./assets/roomBackground.png");
 				startScreen = new component(414,412,0,0,"./assets/gameStart.png");
 				character = new component (65,122,500,500,"./assets/character/characterStand.png");
-				rEScreen = new component (414,412,0,0,"./assets/placeHolder/randomEncounter.png");
+				
 				inventoryScreen = new component (414,412,0,0,"./assets/inventory.png");
 				mathPuzzle = new component (414,412,0,0,"./assets/mathQuestion/mathQ1.png");
 				puzzle1 = new component (100,100,500,500,"./assets/puzzle/puzzle1.png");
@@ -262,12 +261,7 @@
 				if (gameArea.key&& gameArea.key == 87||gameArea.key == 83||gameArea.key == 65||gameArea.key == 68){
 					if(timer > 10){
 						
-						var randomEncounter = Math.floor((Math.random() * 1000) + 1);
-						if(randomEncounter > 998){
-							gamePaused = true;
-							rE = true;
-							SoundManager.play('RE');
-						}
+					
 
 						
 							
@@ -488,7 +482,7 @@
 			
 			*/
 			var inv = false;
-			var rE = false;
+			
 			var gameStarted = false;
 			var gamePaused = false;
 			function enterGame(){
@@ -1247,13 +1241,7 @@
 							}
 						
 					}
-					else if(rE){
-						rEScreen.update();
-						if(gameArea.key && gameArea.key == 13){
-							gamePaused = false;
-							rE = false;
-							}
-					}
+				
 					else if(inv){
 						inventoryScreen.update();
 						if(moonKey){keyMoon.update();}
