@@ -521,9 +521,9 @@
 			
 			var gameStarted = false;
 			var gamePaused = false;
-			function enterGame(){
-				roomY = 2;
-				roomX = 4;
+			function enterGame(){ //oda değiştirme başlangıç------------------------------------------------------------------------------------
+				roomY = 5;
+				roomX = 2;
 				
 				gameStarted = true;
 				changeRoom(-1);
@@ -569,8 +569,8 @@
 					
 					
 				switch(roomY){
-				case 0:
-					switch(roomX){//3,3-3,4 arasındaki kapı ve 1,2-0,2 arasındaki kapı kilitli yapılacak!!!!!!!!!!!!!!!!!!!!!!!!!!
+				case 0:// ------------------------------y = 0-------------------------------------------------------------------------------
+					switch(roomX){
 						case 0:
 							
 							doors[0].x = 500;doors[0].y = 500;
@@ -651,7 +651,7 @@
 							break;
 					}
 					break;
-				case 1:
+				case 1:// ------------------------------y = 1-------------------------------------------------------------------------------
 					switch(roomX){
 						case 0:
 							
@@ -745,7 +745,7 @@
 							break;
 					}
 					break;
-				case 2:
+				case 2:// ------------------------------y = 2-------------------------------------------------------------------------------
 					switch(roomX){
 						case 0:
 
@@ -821,7 +821,7 @@
 							break;
 					}
 					break;
-				case 3:
+				case 3:// ------------------------------y = 3-------------------------------------------------------------------------------
 					switch(roomX){
 						case 0:
 
@@ -923,7 +923,7 @@
 							break;
 					}
 					break;
-				case 4:
+				case 4:// ------------------------------y = 4-------------------------------------------------------------------------------
 					switch(roomX){
 						case 0:
 							
@@ -1027,7 +1027,7 @@
 							break;
 					}
 					break;
-				case 5:
+				case 5:// ------------------------------y = 5-------------------------------------------------------------------------------
 					switch(roomX){
 						case 0:
 							
@@ -1108,7 +1108,7 @@
 					break;
 				}
 			
-			}
+			}// oda değiştirme bitiş-------------------------------------------------------------------------------------------
 			var marble0Have = false;
 			var marble1Have = false;
 			var marble2Have = false;
@@ -1126,7 +1126,7 @@
 			var puzzle1Complete = false;
 			var puzzle2Complete = false;
 			var puzzle3Complete = false;
-			function puzzle(puzzleNum){
+			function puzzle(puzzleNum){//----------------------------------------------------------------------------puzzle açar
 				gamePaused = true;
 				switch(puzzleNum){
 					case 1:
@@ -1154,7 +1154,7 @@
 			}
 
 
-			function p1Func(){
+			function p1Func(){ //----------------------------------------------puzzle1
 				mathPuzzle.update();
 					if(roomTimer >20)
 						switch(mathQuestionNum){
@@ -1250,7 +1250,7 @@
 			var enemyRolled = false;
 			
 			
-			function p2Func(){
+			function p2Func(){ //----------------------------------------puzzle2
 				puzzle2Screen.update();
 				enemy.update();
 				enemyDice.update();
@@ -1294,7 +1294,7 @@
 
 				
 				
-				if(gameArea.key == 82 && roomTimer > 15 && reroll>0){ // roll --------------------------------------------------------------------------------
+				if(gameArea.key == 82 && roomTimer > 15 && reroll>0){ // yeniden zar at --------------------------------------------------------------------------------
 					
 					if(!dice1Locked)dice1Num = Math.floor((Math.random() * 6) + 1);
 					if(!dice2Locked)dice2Num = Math.floor((Math.random() * 6) + 1);
@@ -1338,7 +1338,7 @@
 					roomTimer = 0;
 					reroll--;
 				}
-				if(gameArea.key == 80 && roomTimer > 15){ // play ------------------------------------------------------------------------
+				if(gameArea.key == 80 && roomTimer > 15){ // oyna ------------------------------------------------------------------------
 					switch(dice1Num){
 						case 1:
 						case 2:
@@ -1414,7 +1414,7 @@
 
 					
 					
-					switch(enemyHealthNum){
+					switch(enemyHealthNum){ //--------------------------------------- canları güncelle
 						case 1:
 							enemyHealth.image.src="./assets/fight/health1.png";
 							break;
@@ -1470,7 +1470,7 @@
 
 					SoundManager.play('dice');
 					enemyDiceNum = Math.floor((Math.random() * 6) + 1);
-					switch(enemyDiceNum){
+					switch(enemyDiceNum){ //-------------------------------------------------------yeni tur için zar at
 						case 1:
 						case 2:
 							enemyDice.image.src="./assets/fight/sword1.png";
@@ -1543,12 +1543,12 @@
 					dice2Locked = false;
 					
 				}
-				if(gameArea.key == 65 && !dice1Locked && roomTimer>10){
+				if(gameArea.key == 65 && !dice1Locked && roomTimer>10){ // 1. zarı kilitle
 					dice1Locked = true;
 					dice1.x = 250; dice1.y = 350;	 
 					dice1Locked = true;
 				 }
-				if(gameArea.key == 66 && !dice2Locked && roomTimer>10){
+				if(gameArea.key == 66 && !dice2Locked && roomTimer>10){// 2. zarı kilitle
 					dice2Locked = true;		
 					dice2.x = 350; dice2.y = 350;
 					dice2Locked = true;
