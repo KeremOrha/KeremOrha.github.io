@@ -60,7 +60,7 @@
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 70");
+				console.log("All sounds ready! + 71");
 			});
 		
 		
@@ -592,9 +592,13 @@
 
 							if(!flashlightHave){
 								darkRoom.x = 0; darkRoom.y = 0;
+								marble[1].x = 500; marble[1].y = 500;
+								
 							}
 							else{
 								darkRoom.x = 500; darkRoom.y = 500;
+								if(marble1Have){marble[1].x = 140; marble[1].y = 150;}
+								else{marble[1].x = 500; marble[1].y = 500;}
 							}
 							
 							doors[0].x = -24;doors[0].y = 174;
@@ -1238,6 +1242,8 @@
 						if(moonKey){keyMoon.x = 45; keyMoon.y = 260;}
 						if(flashlightHave){flashlight.x = 320; flashlight.y = 280;}
 						if(marble0Have){marble[0].x = 41; marble[0].y = 120;}
+						if(marble1Have){marble[1].x = 180; marble[1].y = 120;}
+						if(marble2Have){marble[2].x = 320; marble[2].y = 120;}
 							}
 						
 					}
@@ -1247,6 +1253,8 @@
 						if(moonKey){keyMoon.update();}
 						if(flashlightHave){flashlight.update();}
 						if(marble0Have){marble[0].update();}
+						if(marble1Have){marble[1].update();}
+						if(marble2Have){marble[2].update();}
 						if(gameArea.key && gameArea.key == 69 && roomTimer >10){
 							roomTimer = 0;
 							gamePaused = false;
@@ -1254,6 +1262,8 @@
 							keyMoon.x = 500; keyMoon.y = 500;
 							flashlight.x = 500; flashlight.y = 500;
 							marble[0].x = 500; marble[0].y = 500;
+							marble[1].x = 500; marble[1].y = 500;
+							marble[2].x = 500; marble[2].y = 500;
 							}
 					}
 
