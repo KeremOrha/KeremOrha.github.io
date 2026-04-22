@@ -62,7 +62,7 @@
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 78");
+				console.log("All sounds ready! + 79");
 			});
 		
 		
@@ -89,12 +89,12 @@
 			var marble = [];
 
 			var enemy;
-			var enemydice;
+			var enemyDice;
 			var dice1;
 			var dice2;
 			var enemyHealth;
 			var health;
-			
+			var puzzle2Screen;
 			
 			
 			function startGame(){
@@ -102,7 +102,7 @@
 				startScreen = new component(414,412,0,0,"./assets/gameStart.png");
 				character = new component (65,122,500,500,"./assets/character/characterStand.png");
 				
-				inventoryScreen = new component (414,412,0,0,"./assets/inventory.png"); // aynı anda fightScreen
+				inventoryScreen = new component (414,412,0,0,"./assets/inventory.png");
 				mathPuzzle = new component (414,412,0,0,"./assets/mathQuestion/mathQ1.png");
 				puzzle1 = new component (100,100,500,500,"./assets/puzzle/puzzle1.png");
 				keySun = new component (51,102,500,500,"./assets/sunKey.png");
@@ -112,12 +112,12 @@
 
 				puzzle2 = new component (100,100,500,500,"./assets/puzzle/puzzle1.png");
 				enemy = new component (28,66,500,500,"./assets/fight/enemy.png");
-				enemydice = new component(25,25,500,500,"./assets/fight/sword1.png");
+				enemyDice = new component(25,25,500,500,"./assets/fight/sword1.png");
 				dice1 = new component(25,25,100,300,"./assets/fight/sword1.png");
 				dice2 = new component(25,25,150,300,"./assets/fight/sword1.png");
 				enemyHealth = new component (72,66,500,500,"./assets/fight/health5.png");
 				health = new component (72,66,500,500,"./assets/fight/health5.png");
-				
+				puzzle2Screen = new component (414,412,0,0,"./assets/puzzle2.png");
 
 
 
@@ -1239,7 +1239,7 @@
 
 			var dice1Locked = false;
 			var dice2Locked = false;
-			var enemyDiceNum;
+			var Num;
 			var dice1Num;
 			var dice2Num;
 			var healthNum = 5;
@@ -1248,24 +1248,24 @@
 			
 			function p2Func(){
 				enemy.update();
-				enemydice.update();
+				.update();
 				dice1.update();
 				dice2.update();
 				enemyHealth.update();
 				health.update();
-				inventoryScreen.update();
+				puzzle2Screen.update();
 				enemy.x = 250; enemy.y = 30;
 				enemyHealth.x = 75; enemyHealth.y = 30;
 				health.x = 75, health.y = 350;
 				
-				enemyDice.x = 125; enemyDice.y = 30;
+				.x = 125; .y = 30;
 				
 				
 				if(gameArea.key == 82 && roomTimer > 15){
-					enemyDiceNum = Math.floor((Math.random() * 6) + 1);
+					Num = Math.floor((Math.random() * 6) + 1);
 					dice1Num = Math.floor((Math.random() * 6) + 1);
 					dice2Num = Math.floor((Math.random() * 6) + 1);
-					switch(enemyDiceNum){
+					switch(Num){
 						case 1:
 						case 2:
 							health
