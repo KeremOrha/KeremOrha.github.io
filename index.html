@@ -62,7 +62,7 @@
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 84");
+				console.log("All sounds ready! + 85");
 			});
 		
 		
@@ -1272,17 +1272,17 @@
 						case 1:
 						case 2:
 							health
-							enemyDice.image.src="./assets/fight/sword1";
+							enemyDice.image.src="./assets/fight/sword1.png";
 							break;
 						case 3:
 						case 4:
-							enemyDice.image.src="./assets/fight/health1";
+							enemyDice.image.src="./assets/fight/health1.png";
 							break;
 						case 5:
-							enemyDice.image.src="./assets/fight/sword2";
+							enemyDice.image.src="./assets/fight/sword2.png";
 							break;
 						case 6:
-							enemyDice.image.src="./assets/fight/health2";
+							enemyDice.image.src="./assets/fight/health2.png";
 							break;
 						default:
 							break;
@@ -1300,17 +1300,17 @@
 					switch(dice1Num){
 						case 1:
 						case 2:
-							dice1.image.src="./assets/fight/sword1";
+							dice1.image.src="./assets/fight/sword1.png";
 							break;
 						case 3:
 						case 4:
-							dice1.image.src="./assets/fight/health1";
+							dice1.image.src="./assets/fight/health1.png";
 							break;
 						case 5:
-							dice1.image.src="./assets/fight/sword2";
+							dice1.image.src="./assets/fight/sword2.png";
 							break;
 						case 6:
-							dice1.image.src="./assets/fight/health2";
+							dice1.image.src="./assets/fight/health2.png";
 							break;
 						default:
 							break;
@@ -1318,17 +1318,17 @@
 					switch(dice2Num){
 						case 1:
 						case 2:
-							dice2.image.src="./assets/fight/sword1";
+							dice2.image.src="./assets/fight/sword1.png";
 							break;
 						case 3:
 						case 4:
-							dice2.image.src="./assets/fight/health1";
+							dice2.image.src="./assets/fight/health1.png";
 							break;
 						case 5:
-							dice2.image.src="./assets/fight/sword2";
+							dice2.image.src="./assets/fight/sword2.png";
 							break;
 						case 6:
-							dice2.image.src="./assets/fight/health2";
+							dice2.image.src="./assets/fight/health2.png";
 							break;
 						default:
 					}
@@ -1395,19 +1395,19 @@
 					if(healthNum >5)healthNum = 5;
 					switch(enemyHealthNum){
 						case 1:
-							enemyHealth.image.src="./assets/fight/health1";
+							enemyHealth.image.src="./assets/fight/health1.png";
 							break;
 						case 2:
-							enemyHealth.image.src="./assets/fight/health2";
+							enemyHealth.image.src="./assets/fight/health2.png";
 							break;
 						case 3:
-							enemyHealth.image.src="./assets/fight/health3";
+							enemyHealth.image.src="./assets/fight/health3.png";
 							break;
 						case 4:
-							enemyHealth.image.src="./assets/fight/health4";
+							enemyHealth.image.src="./assets/fight/health4.png";
 							break;
 						case 5:
-							enemyHealth.image.src="./assets/fight/health5";
+							enemyHealth.image.src="./assets/fight/health5.png";
 							break;
 						default:
 							SoundManager.play('success');
@@ -1420,19 +1420,19 @@
 					}
 					switch(healthNum){
 						case 1:
-							health.image.src="./assets/fight/health1";
+							health.image.src="./assets/fight/health1.png";
 							break;
 						case 2:
-							health.image.src="./assets/fight/health2";
+							health.image.src="./assets/fight/health2.png";
 							break;
 						case 3:
-							health.image.src="./assets/fight/health3";
+							health.image.src="./assets/fight/health3.png";
 							break;
 						case 4:
-							health.image.src="./assets/fight/health4";
+							health.image.src="./assets/fight/health4.png";
 							break;
 						case 5:
-							health.image.src="./assets/fight/health5";
+							health.image.src="./assets/fight/health5.png";
 							break;
 						default:
 							SoundManager.play('fail');
@@ -1441,8 +1441,8 @@
 							puzzle2Open = false;
 							break;
 					}
-					dice1.x = 250; dice1.y = 300;
-					dice2.x = 300; dice2.y = 300;
+					dice1.x = 300; dice1.y = 300;
+					dice2.x = 475; dice2.y = 300;
 					dice1Locked = false;
 					dice2Locked = false;
 					reroll = 3;
@@ -1451,11 +1451,11 @@
 				}
 				if(gameArea.key == 65 && !dice1Locked && roomTimer>10){
 					dice1Locked = true;
-					dice1.x = 250; dice1.y = 350;	 
+					dice1.x = 300; dice1.y = 350;	 
 				 }
 				if(gameArea.key == 66 && !dice2Locked && roomTimer>10){
 					dice2Locked = true;		
-					dice2.x = 300; dice2.y = 350;
+					dice2.x = 475; dice2.y = 350;
 						 
 				}
 			}
