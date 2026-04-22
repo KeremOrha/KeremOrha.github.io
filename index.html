@@ -62,7 +62,7 @@
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 81");
+				console.log("All sounds ready! + 82");
 			});
 		
 		
@@ -111,8 +111,8 @@
 				darkRoom = new component (414,412,500,500,"./assets/darkRoom.png");
 
 				puzzle2 = new component (100,100,500,500,"./assets/puzzle/puzzle1.png");
-				enemy = new component (28,66,500,500,"./assets/fight/enemy.png");
-				enemyDice = new component(25,25,500,500,"./assets/fight/sword1.png");
+				enemy = new component (28,66,350,30,"./assets/fight/enemy.png");
+				enemyDice = new component(25,25,125,50,"./assets/fight/sword1.png");
 				dice1 = new component(25,25,100,300,"./assets/fight/sword1.png");
 				dice2 = new component(25,25,150,300,"./assets/fight/sword1.png");
 				enemyHealth = new component (72,66,500,500,"./assets/fight/health5.png");
@@ -1257,11 +1257,11 @@
 				enemyHealth.update();
 				health.update();
 				
-				enemy.x = 250; enemy.y = 30;
+				enemy.x = 350; enemy.y = 30;
 				enemyHealth.x = 75; enemyHealth.y = 30;
-				health.x = 75, health.y = 350;
+				health.x = 75, health.y = 300;
 				
-				enemyDice.x = 125; enemyDice.y = 30;
+				enemyDice.x = 275; enemyDice.y = 30;
 
 
 
@@ -1441,8 +1441,8 @@
 							puzzle2Open = false;
 							break;
 					}
-					dice1.x = 100; dice1.y = 300;
-					dice2.x = 150; dice2.y = 300;
+					dice1.x = 250; dice1.y = 300;
+					dice2.x = 300; dice2.y = 300;
 					dice1Locked = false;
 					dice2Locked = false;
 					reroll = 3;
@@ -1451,11 +1451,11 @@
 				}
 				if(gameArea.key == 65 && !dice1Locked && roomTimer>10){
 					dice1Locked = true;
-					dice1.x = 100; dice1.y = 350;	 
+					dice1.x = 250; dice1.y = 350;	 
 				 }
 				if(gameArea.key == 66 && !dice2Locked && roomTimer>10){
 					dice2Locked = true;		
-					dice2.x = 150; dice2.y = 350;
+					dice2.x = 300; dice2.y = 350;
 						 
 				}
 			}
