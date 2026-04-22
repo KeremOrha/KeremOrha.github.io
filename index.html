@@ -62,7 +62,7 @@
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 89");
+				console.log("All sounds ready! + 90");
 			});
 		
 		
@@ -1601,6 +1601,7 @@
 						gamePaused = true;
 						inv = true;
 						if(moonKey){keyMoon.x = 45; keyMoon.y = 260;}
+						if(sunKey){keySun.x = 176; keySun.y = 260;}
 						if(flashlightHave){flashlight.x = 320; flashlight.y = 280;}
 						if(marble0Have){marble[0].x = 41; marble[0].y = 120;}
 						if(marble1Have){marble[1].x = 180; marble[1].y = 120;}
@@ -1612,6 +1613,7 @@
 					else if(inv){
 						inventoryScreen.update();
 						if(moonKey){keyMoon.update();}
+						if(sunKey){keySun.update();}
 						if(flashlightHave){flashlight.update();}
 						if(marble0Have){marble[0].update();}
 						if(marble1Have){marble[1].update();}
