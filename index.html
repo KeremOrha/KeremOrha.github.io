@@ -60,7 +60,7 @@
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 73");
+				console.log("All sounds ready! + 74");
 			});
 		
 		
@@ -85,19 +85,40 @@
 			var flashlight;
 			var darkRoom;
 			var marble = [];
+
+			var enemy;
+			var enemydice;
+			var dice1;
+			var dice2;
+			var enemyHealth;
+			var health;
+			
+			
 			
 			function startGame(){
 				background = new component(414,412,0,0,"./assets/roomBackground.png");
 				startScreen = new component(414,412,0,0,"./assets/gameStart.png");
 				character = new component (65,122,500,500,"./assets/character/characterStand.png");
 				
-				inventoryScreen = new component (414,412,0,0,"./assets/inventory.png");
+				inventoryScreen = new component (414,412,0,0,"./assets/inventory.png"); // aynı anda fightScreen
 				mathPuzzle = new component (414,412,0,0,"./assets/mathQuestion/mathQ1.png");
 				puzzle1 = new component (100,100,500,500,"./assets/puzzle/puzzle1.png");
 				keySun = new component (51,102,500,500,"./assets/sunKey.png");
 				keyMoon = new component (51,102,500,500,"./assets/moonKey.png");
 				flashlight = new component (40,40,500,500,"./assets/flashlight.png");
 				darkRoom = new component (414,412,500,500,"./assets/darkRoom.png");
+
+				enemy = new component (28,66,500,500,"./assets/fight/enemy.png");
+				enemydice = new component(25,25,500,500,"./assets/fight/sword1.png");
+				dice1 = new component(25,25,500,500,"./assets/fight/sword1.png");
+				dice2 = new component(25,25,500,500,"./assets/fight/sword1.png");
+				enemyHealth = new component (72,66,500,500,"./assets/fight/health5.png");
+				health = new component (72,66,500,500,"./assets/fight/health5.png");
+				
+
+
+
+				
 
 				marble = [
 
@@ -400,6 +421,11 @@
 				if (character.crashWith(puzzle1)) {
 
 						puzzle(1);
+						roomTimer = 0;
+					}
+				if (character.crashWith(puzzle2)) {
+
+						puzzle(2);
 						roomTimer = 0;
 					}
 
@@ -748,6 +774,11 @@
 							
 							break;
 						case 3:
+
+							if(!puzzle2Complete){
+								puzzle2.x = 40;puzzle2.y = 170;
+							}
+
 							
 							doors[0].x = 500;doors[0].y = 500;
 							doors[1].x = 381;doors[1].y = 174;
@@ -762,6 +793,8 @@
 							
 							break;
 						case 4:
+
+							puzzle1.x = 500;puzzle1.y = 500;
 							
 							doors[0].x = -24;doors[0].y = 174;
 							doors[1].x = 500;doors[1].y = 500;
@@ -1092,7 +1125,10 @@
 						puzzle1Open = true;
 						break;
 					case 2:
-
+						
+						
+						puzzle2Open = true;
+						break;
 
 							
 						break;
@@ -1191,6 +1227,22 @@
 						
 				
 			}
+
+
+
+			function p2Func(){
+			enemy.update();
+			enemydice.update();
+			dice1.update();
+			dice2.update();
+			enemyHealth.update();
+			health.update();
+	
+
+				
+			}
+
+			
 			
 			function updateGameArea(){
 				roomTimer ++;
@@ -1203,7 +1255,7 @@
 
 					
 					if(!puzzle1Complete)puzzle1.update();	
-
+					if(!puzzle2Complete)puzzle2.update();
 					
 					character.newPos();
 					character.update();
@@ -1272,7 +1324,9 @@
 					else if(puzzle1Open){
 						p1Func();	
 					}
-
+					else if(puzzle2Open){
+						p2Func();	
+					}
 
 
 						
