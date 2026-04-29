@@ -64,7 +64,7 @@
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 106");
+				console.log("All sounds ready! + 107");
 			});
 		
 		
@@ -456,6 +456,11 @@
 					if(marble0Have && marble1Have && marble2Have){
 						SoundManager.play('win');
 						gameOver = true;
+						gamePaused = true;
+					}
+					else{
+						SoundManager.play('fail');
+						
 					}
 				}
 						
