@@ -63,7 +63,7 @@
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 97");
+				console.log("All sounds ready! + 98");
 			});
 		
 		
@@ -1630,9 +1630,12 @@
 							
 							
 					}
-					for(let i = 0; i <marble.length; i++){
-						marble[i].update();
-					}
+					
+					marble[0].update();
+					marble[1].update();
+
+
+					
 					flashlight.update();
 					darkRoom.update();
 						/*if(gameArea.key && gameArea.key == 85){
