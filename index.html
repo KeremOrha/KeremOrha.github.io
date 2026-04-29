@@ -60,7 +60,7 @@
 				sword: './sounds/sword.mp3',
 				heal: './sounds/heal.mp3',
 				dice: './sounds/dice.mp3',
-				win: '.sounds/win.mp3'
+				win: './sounds/win.mp3'
 			};
 
 			SoundManager.load(manifest).then(() => {
@@ -294,7 +294,7 @@
 				if (gameArea.key && gameArea.key == 68) {character.xSpeed = 3*temp; }
 				if (gameArea.key && gameArea.key == 87) {character.ySpeed = -3*temp; }
 				if (gameArea.key && gameArea.key == 83) {character.ySpeed = 3*temp; }
-				if (gameArea.key&& gameArea.key == 87||gameArea.key == 83||gameArea.key == 65||gameArea.key == 68){
+				if (gameArea.key&& (gameArea.key == 87||gameArea.key == 83||gameArea.key == 65||gameArea.key == 68)){
 					if(timer > 10){
 						
 					
@@ -411,7 +411,7 @@
 				}
 
 
-				for (let i = 0; i < marble.lenght; i++) {
+				for (let i = 0; i < marble.length; i++) {
 					if (character.crashWith(marble[i])) {
 						SoundManager.play('pop');
 						switch(i){
@@ -420,6 +420,9 @@
 								break;
 							case 1:
 								marble1Have = true;
+								break;
+							case 2:
+								marble2Have = true;
 								break;
 							default:
 								break;
@@ -453,7 +456,7 @@
 					}
 				if (character.crashWith(fDoor)&&gameArea.key && gameArea.key == 32 && roomTimer>20) {
 					roomTimer = 0;
-					if(marble1Have && marble2have && marble3Have){
+					if(marble1Have && marble2Have && marble3Have){
 						SoundManager.play('win');
 						gameOver = true;
 					}
@@ -462,7 +465,7 @@
 				if (character.crashWith(lockedDoors[0])&&gameArea.key && gameArea.key == 32 && roomTimer>20) {
 					
 					roomTimer = 0; 
-					if(moonKey){
+					if(moonKeyHave){
 						SoundManager.play('doorUnlock');
 						moonDoorLocked = false;
 						changeRoom(-1);
@@ -475,7 +478,7 @@
 				if (character.crashWith(lockedDoors[1])&&gameArea.key && gameArea.key == 32 && roomTimer>20) {
 					
 					roomTimer = 0; 
-					if(sunKey){
+					if(sunKeyHave){
 						SoundManager.play('doorUnlock');
 						sunDoorLocked = false;
 						changeRoom(-1);
@@ -910,7 +913,7 @@
 							marble[0].x = 500; marble[0].y = 500;
 							doors[2].x = 500;doors[2].y = 500;
 							doors[3].x = 184;doors[3].y = 375;
-							marble
+							
 
 							
 							furn[0].x = 500; furn[0].y=500;
@@ -1139,9 +1142,9 @@
 			var marble0Have = false;
 			var marble1Have = false;
 			var marble2Have = false;
-			var sunKey = false;
-			var moonKey = false;
-			var flashlight = false;
+			var sunKeyHave = false;
+			var moonKeyHave = false;
+			
 
 
 
@@ -1189,7 +1192,7 @@
 								if(gameArea.key == 66){
 									SoundManager.play('success');
 									puzzle1Complete = true;
-									moonKey = true;
+									moonKeyHave = true;
 									roomTimer = 0;
 									gamePaused = false;
 									puzzle1Open = false;
@@ -1207,7 +1210,7 @@
 								if(gameArea.key == 68){
 									SoundManager.play('success');
 									puzzle1Complete = true;
-									moonKey = true;
+									moonKeyHave = true;
 									roomTimer = 0;
 									gamePaused = false;
 									puzzle1Open = false;
@@ -1225,7 +1228,7 @@
 								if(gameArea.key == 65){
 									SoundManager.play('success');
 									puzzle1Complete = true;
-									moonKey = true;
+									moonKeyHave = true;
 									roomTimer = 0;
 									gamePaused = false;
 									puzzle1Open = false;
@@ -1243,7 +1246,7 @@
 								if(gameArea.key == 69){
 									SoundManager.play('success');
 									puzzle1Complete = true;
-									moonKey = true;
+									moonKeyHave = true;
 									roomTimer = 0;
 									gamePaused = false;
 									puzzle1Open = false;
@@ -1460,7 +1463,7 @@
 						default:
 							SoundManager.play('success');
 							puzzle2Complete = true;
-							sunKey = true;
+							sunKeyHave = true;
 							roomTimer = 0;
 							gamePaused = false;
 							puzzle2Open = false;
@@ -1592,7 +1595,7 @@
 						if(gameArea.key == 65){
 							SoundManager.play('success');
 							puzzle3Complete = true;
-							sunKey = true;
+							sunKeyHave = true;
 							roomTimer = 0;		
 							gamePaused = false;
 							puzzle3Open = false;
@@ -1669,8 +1672,8 @@
 						roomTimer = 0;
 						gamePaused = true;
 						inv = true;
-						if(moonKey){keyMoon.x = 45; keyMoon.y = 260;}
-						if(sunKey){keySun.x = 176; keySun.y = 260;}
+						if(moonKeyHave){keyMoon.x = 45; keyMoon.y = 260;}
+						if(sunKeyHave){keySun.x = 176; keySun.y = 260;}
 						if(flashlightHave){flashlight.x = 320; flashlight.y = 280;}
 						if(marble0Have){marble[0].x = 41; marble[0].y = 120;}
 						if(marble1Have){marble[1].x = 180; marble[1].y = 120;}
@@ -1681,8 +1684,8 @@
 				
 					else if(inv){
 						inventoryScreen.update();
-						if(moonKey){keyMoon.update();}
-						if(sunKey){keySun.update();}
+						if(moonKeyHave){keyMoon.update();}
+						if(sunKeyHave){keySun.update();}
 						if(flashlightHave){flashlight.update();}
 						if(marble0Have){marble[0].update();}
 						if(marble1Have){marble[1].update();}
