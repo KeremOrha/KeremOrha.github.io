@@ -63,7 +63,7 @@
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 98");
+				console.log("All sounds ready! + 99");
 			});
 		
 		
@@ -404,7 +404,7 @@
 				}
 
 
-				for (let i = 0; i < marble.length; i++) {
+				for (let i = 0; i < 2; i++) {
 					if (character.crashWith(marble[i])) {
 						SoundManager.play('pop');
 						switch(i){
