@@ -59,11 +59,12 @@
 				pop: './sounds/pop.mp3',
 				sword: './sounds/sword.mp3',
 				heal: './sounds/heal.mp3',
-				dice: './sounds/dice.mp3'
+				dice: './sounds/dice.mp3',
+				win: '.sounds/win.mp3'
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 102");
+				console.log("All sounds ready! + 104");
 			});
 		
 		
@@ -96,7 +97,9 @@
 			var enemyHealth;
 			var health;
 			var puzzle2Screen;
-			
+
+
+			var fDoor;
 			
 			function startGame(){
 				background = new component(414,412,0,0,"./assets/roomBackground.png");
@@ -144,6 +147,8 @@
 					new component(20,412,-4,0,"./assets/placeHolder/chn3.png"),
 					new component(20,412,400,0,"./assets/placeHolder/chn4.png")
 				];
+
+				
 				/*
 					furn listesi
 						
@@ -197,6 +202,8 @@
 					new component(58,58,500,500,"./assets/hDoor.png"),
 					new component(58,58,500,500,"./assets/hDoor.png")
 				];
+
+				fDoor = new component(58,58,500,500,"./assets/fDoor.png");
 				lockedDoors = [
 					new component(58,58,500,500,"./assets/vLockedDoor.png"),
 					new component(58,58,500,500,"./assets/hLockedDoor.png")
@@ -352,7 +359,7 @@
 			*/
 			
 			
-			
+			var gameOver = false;
 			var lastKeyPressed;
 			var roomTimer = 0;
 			function collision(){
@@ -444,7 +451,13 @@
 						puzzle(3);
 						roomTimer = 0;
 					}
-
+				if (character.crashWith(fDoor)&&gameArea.key && gameArea.key == 32 && roomTimer>20) {
+					roomTimer = 0;
+					if(marble1Have && marble2have && marble3Have){
+						SoundManager.play('win');
+						gameOver = true;
+					}
+						
 				
 				if (character.crashWith(lockedDoors[0])&&gameArea.key && gameArea.key == 32 && roomTimer>20) {
 					
@@ -608,6 +621,10 @@
 							
 							break;
 						case 2:
+
+							fDoor.x = 184;fDoor.y = -24;
+							
+							
 							
 							doors[0].x = 500;doors[0].y = 500;
 							doors[1].x = 500;doors[1].y = 500;
@@ -664,7 +681,7 @@
 				case 1:// ------------------------------y = 1-------------------------------------------------------------------------------
 					switch(roomX){
 						case 0:
-							
+							fDoor.x = 500;fDoor.y = 500;
 							doors[0].x = 500;doors[0].y = 500;
 							doors[1].x = 381;doors[1].y = 174;
 							doors[2].x = 184;doors[2].y = -24;
@@ -1693,7 +1710,10 @@
 					else if(puzzle3Open){
 						p3Func();	
 					}
-
+					else if(gameOver){
+						background.update();
+						background.image.src="./assets/tv.png";
+					}
 						
 					else{
 						startScreen.update();
