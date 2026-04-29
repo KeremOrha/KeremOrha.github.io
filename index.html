@@ -64,7 +64,7 @@
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 107");
+				console.log("All sounds ready! + 108");
 			});
 		
 		
@@ -283,17 +283,17 @@
 			
 			var walk = 1;
 			var timer = 5;
-			var temp = 1;
+			
 
 			var walkSound = true;
 			
 			function cWalk(){
 				character.xSpeed = 0;
 				character.ySpeed = 0;
-				if (gameArea.key && gameArea.key == 65) {character.xSpeed = -3*temp; }
-				if (gameArea.key && gameArea.key == 68) {character.xSpeed = 3*temp; }
-				if (gameArea.key && gameArea.key == 87) {character.ySpeed = -3*temp; }
-				if (gameArea.key && gameArea.key == 83) {character.ySpeed = 3*temp; }
+				if (gameArea.key && gameArea.key == 65) {character.xSpeed = -3; }
+				if (gameArea.key && gameArea.key == 68) {character.xSpeed = 3; }
+				if (gameArea.key && gameArea.key == 87) {character.ySpeed = -3; }
+				if (gameArea.key && gameArea.key == 83) {character.ySpeed = 3; }
 				if (gameArea.key&& (gameArea.key == 87||gameArea.key == 83||gameArea.key == 65||gameArea.key == 68)){
 					if(timer > 10){
 						
@@ -687,7 +687,7 @@
 				case 1:// ------------------------------y = 1-------------------------------------------------------------------------------
 					switch(roomX){
 						case 0:
-							fDoor.x = 500;fDoor.y = 500;
+							
 							doors[0].x = 500;doors[0].y = 500;
 							doors[1].x = 381;doors[1].y = 174;
 							doors[2].x = 184;doors[2].y = -24;
@@ -719,7 +719,7 @@
 							
 							break;
 						case 2:
-							
+							fDoor.x = 500;fDoor.y = 500;
 							doors[0].x = -24;doors[0].y = 174;
 							doors[1].x = 381;doors[1].y = 174;
 							if(sunDoorLocked){
@@ -783,7 +783,7 @@
 						case 0:
 
 							if(!flashlightHave){
-								flashlight.x = 200;flashlight.y = 200;
+								flashlight.x = 200;flashlight.y = 300;
 							}
 							else{
 								flashlight.x = 500;flashlight.y = 500;
