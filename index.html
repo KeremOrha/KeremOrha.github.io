@@ -63,7 +63,7 @@
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 94");
+				console.log("All sounds ready! + 95");
 			});
 		
 		
@@ -1591,7 +1591,7 @@
 							puzzle3Open = false;
 						}
 						
-					character.x = 325; character.y = 140;
+					character.x = 20; character.y = 140;
 						
 				
 			}
@@ -1614,7 +1614,7 @@
 					
 					if(!puzzle1Complete)puzzle1.update();	
 					if(!puzzle2Complete)puzzle2.update();
-					
+					if(!puzzle3Complete)puzzle2.update();
 					character.newPos();
 					character.update();
 						
