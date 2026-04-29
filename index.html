@@ -411,7 +411,7 @@
 				}
 
 
-				for (let i = 0; i < marble.length; i++) {
+				for (let i = 0; i < 2; i++) {
 					if (character.crashWith(marble[i])) {
 						SoundManager.play('pop');
 						switch(i){
@@ -420,9 +420,6 @@
 								break;
 							case 1:
 								marble1Have = true;
-								break;
-							case 2:
-								marble2Have = true;
 								break;
 							default:
 								break;
@@ -456,7 +453,7 @@
 					}
 				if (character.crashWith(fDoor)&&gameArea.key && gameArea.key == 32 && roomTimer>20) {
 					roomTimer = 0;
-					if(marble1Have && marble2Have && marble3Have){
+					if(marble0Have && marble1Have && marble2Have){
 						SoundManager.play('win');
 						gameOver = true;
 					}
@@ -1596,7 +1593,7 @@
 						if(gameArea.key == 65){
 							SoundManager.play('success');
 							puzzle3Complete = true;
-							sunKeyHave = true;
+							marble2Have = true;
 							roomTimer = 0;		
 							gamePaused = false;
 							puzzle3Open = false;
@@ -1652,7 +1649,7 @@
 							
 					}
 					
-					for (let i = 0; i < marble.length; i++) {
+					for (let i = 0; i < 2; i++) {
 						marble[i].update();
 							
 							
