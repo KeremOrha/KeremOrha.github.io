@@ -63,7 +63,7 @@
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready! + 93");
+				console.log("All sounds ready! + 94");
 			});
 		
 		
@@ -103,15 +103,13 @@
 				startScreen = new component(414,412,0,0,"./assets/gameStart.png");
 				character = new component (65,122,500,500,"./assets/character/characterStand.png");
 				
-				inventoryScreen = new component (414,412,0,0,"./assets/inventory.png");
-				mathPuzzle = new component (414,412,0,0,"./assets/mathQuestion/mathQ1.png");
+				inventoryScreen = new component (414,412,0,0,"./assets/inventory.png");//envanter arkaplanı bileşeni
+				
+				mathPuzzle = new component (414,412,0,0,"./assets/mathQuestion/mathQ1.png");//1. bulmaca bileşenleri
 				puzzle1 = new component (100,100,500,500,"./assets/puzzle/puzzle1.png");
-				keySun = new component (51,102,500,500,"./assets/sunKey.png");
-				keyMoon = new component (51,102,500,500,"./assets/moonKey.png");
-				flashlight = new component (40,40,500,500,"./assets/flashlight.png");
-				darkRoom = new component (414,412,500,500,"./assets/darkRoom.png");
+				
 
-				puzzle2 = new component (100,100,500,500,"./assets/puzzle/puzzle1.png");
+				puzzle2 = new component (100,100,500,500,"./assets/puzzle/puzzle1.png");//2. bulmaca bileşenleri
 				enemy = new component (28,66,350,30,"./assets/fight/enemy.png");
 				enemyDice = new component(50,50,275,30,"./assets/fight/sword1.png");
 				dice1 = new component(50,50,250,300,"./assets/fight/sword1.png");
@@ -119,10 +117,16 @@
 				enemyHealth = new component (72,66,500,500,"./assets/fight/health5.png");
 				health = new component (72,66,500,500,"./assets/fight/health5.png");
 				puzzle2Screen = new component (414,412,0,0,"./assets/puzzle2.png");
-
-
-
 				
+
+				puzzle3 = new component (100,100,500,500,"./assets/puzzle/puzzle1.png");//3. bulmaca bileşenleri
+				puzzle3Screen  = new component (414,412,0,0,"./assets/puzzle3.png");
+
+
+				keySun = new component (51,102,500,500,"./assets/sunKey.png");
+				keyMoon = new component (51,102,500,500,"./assets/moonKey.png");
+				flashlight = new component (40,40,500,500,"./assets/flashlight.png");
+				darkRoom = new component (414,412,500,500,"./assets/darkRoom.png");
 
 				marble = [
 
@@ -438,7 +442,11 @@
 						dice2Locked = false;
 					
 					}
+					if (character.crashWith(puzzle3)) {
 
+						puzzle(3);
+						roomTimer = 0;
+					}
 
 				
 				if (character.crashWith(lockedDoors[0])&&gameArea.key && gameArea.key == 32 && roomTimer>20) {
@@ -584,6 +592,11 @@
 							
 							break;
 						case 1:
+
+							if(!puzzle3Complete){
+								puzzle3.x = 280;puzzle3.y = 170;
+							}
+
 							
 							doors[0].x = -24;doors[0].y = 174;
 							doors[1].x = 500;doors[1].y = 500;
@@ -1145,7 +1158,7 @@
 					case 3:
 
 
-							
+						puzzle3Open = true;
 						break;
 							
 					default:
@@ -1528,7 +1541,7 @@
 						default:
 					}
 
-
+						
 
 
 					
@@ -1555,6 +1568,38 @@
 						 
 				}
 			}
+
+
+			function p3Func(){ //----------------------------------------------puzzle3
+				puzzle3Screen.update();
+					if(roomTimer >20)
+						
+							
+						if(gameArea.key == 65){
+							SoundManager.play('success');
+							puzzle3Complete = true;
+							marble[2] = true;
+							roomTimer = 0;		
+							gamePaused = false;
+							puzzle3Open = false;
+							puzzle3.x = 500; puzzle3.y = 500;
+						}
+						else if(gameArea.key == 66 || gameArea.key == 67 || gameArea.key == 68 || gameArea.key == 69 ){			
+							SoundManager.play('fail');	
+							roomTimer = 0;
+							gamePaused = false;
+							puzzle3Open = false;
+						}
+						
+					character.x = 325; character.y = 140;
+						
+				
+			}
+
+
+
+
+
 			
 			
 			function updateGameArea(){
@@ -1642,7 +1687,9 @@
 					else if(puzzle2Open){
 						p2Func();	
 					}
-
+					else if(puzzle3Open){
+						p3Func();	
+					}
 
 						
 					else{
