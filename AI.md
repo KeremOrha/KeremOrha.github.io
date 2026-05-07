@@ -14,7 +14,7 @@ this.update = function(){ ctx = gameArea.context;
 Bu tarz bir component yapısında collision kontrolü yapmak için objelerin kenarlarını karşılaştırabilirsin. Yani iki objenin birbirine değip değmediğini kontrol eden bir fonksiyon yazılır.
 
 Constructor içine şöyle bir method ekleyebilirsin:
-
+```javascript
 this.crashWith = function(otherobj){
     var myleft = this.x;
     var myright = this.x + this.width;
@@ -33,7 +33,7 @@ this.crashWith = function(otherobj){
         myleft > otherright
     );
 }
-
+```
 Bu kodun mantığı şu:
 
 Önce iki objenin sol, sağ, üst ve alt kenarları hesaplanıyor.
@@ -95,7 +95,13 @@ translate(-50%, -50%) → elemanın kendi genişlik/yüksekliğinin yarısı kad
 Yani kodun şu kısmından sonra eklemen yeterli:
 document.body.insertBefore(this.canvas, document.body.childNodes[0]);
 Örneğin:
-document.body.insertBefore(this.canvas, document.body.childNodes[0]);gameArea.canvas.style.position = "absolute";gameArea.canvas.style.left = "50%";gameArea.canvas.style.top = "50%";gameArea.canvas.style.transform = "translate(-50%, -50%)";
+ ```javascript
+ document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+gameArea.canvas.style.position = "absolute";
+gameArea.canvas.style.left = "50%";
+gameArea.canvas.style.top = "50%";
+gameArea.canvas.style.transform = "translate(-50%, -50%)";
+```
 Bu şekilde canvas hem yatay hem dikey olarak ekranın ortasında görünür.
 
 
@@ -267,7 +273,7 @@ This keeps your code clean and ensures all assets are preloaded before your canv
 The Sound Manager Pattern
 This setup allows you to trigger sounds by name, such as sounds.play('laser').
 
-JavaScript
+```javascript
 const SoundManager = {
     context: new (window.AudioContext || window.webkitAudioContext)(),
     cache: {},
@@ -300,7 +306,7 @@ const SoundManager = {
         source.start(0);
     }
 };
-
+```
 // --- Usage ---
 
 const manifest = {
