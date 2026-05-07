@@ -37,6 +37,8 @@ Oyunun envanteri için örnek görsel:
 
 
 Oyun içindeki odalardan bir örnek görsel:
+
+
 ![Placeholder](https://raw.githubusercontent.com/KeremOrha/KeremOrha.github.io/refs/heads/main/assets/g1.png)
 
 
