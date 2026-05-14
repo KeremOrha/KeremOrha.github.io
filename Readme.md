@@ -65,3 +65,4 @@ Oyun içindeki odalardan bir örnek görsel:
 - [heal](https://pixabay.com/sound-effects/film-special-effects-health-pickup-6860/)
 - [dice](https://pixabay.com/sound-effects/film-special-effects-dice-95077/)
 - [win](https://pixabay.com/sound-effects/musical-tada-fanfare-a-6313/)
+- [music](https://pixabay.com/music/lofi-lo-fi-music-loop-sentimental-jazzy-love-473154/)
