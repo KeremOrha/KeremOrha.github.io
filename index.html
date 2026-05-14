@@ -34,7 +34,7 @@
 						const arrayBuffer = await response.arrayBuffer();
 						const audioBuffer = await this.context.decodeAudioData(arrayBuffer);
 						this.cache[name] = audioBuffer;
-						console.log("a");
+						
 					});
 					return Promise.all(promises);
 				},
@@ -74,7 +74,7 @@
 			};
 
 			SoundManager.load(manifest).then(() => {
-				console.log("All sounds ready!");
+				console.log("A");
 			});
 		
 		
