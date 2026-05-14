@@ -14,6 +14,15 @@
 	<body onload = "startGame()" style="background-color:black;">
 			
 		<script>
+		
+			const bgMusic = new Audio('music.mp3');
+
+			bgMusic.loop = true;
+			bgMusic.volume = 0.4;
+
+
+
+			
 				const SoundManager = {
 				context: new (window.AudioContext || window.webkitAudioContext)(),
 				cache: {},
@@ -25,6 +34,7 @@
 						const arrayBuffer = await response.arrayBuffer();
 						const audioBuffer = await this.context.decodeAudioData(arrayBuffer);
 						this.cache[name] = audioBuffer;
+						console.log("a");
 					});
 					return Promise.all(promises);
 				},
@@ -1698,6 +1708,7 @@
 						startScreen.update();
 						if(gameArea.key && gameArea.key == 13){
 							enterGame();
+							bgMusic.play();
 							startScreen.image.src="";
 						}
 					}
